@@ -1,0 +1,93 @@
+---
+aid: mcgill
+name: McGill University
+description: >-
+  McGill University is a public research university in Montreal, Quebec, Canada,
+  ranked #64 in the QS World University Rankings 2025. Its public, machine-readable
+  developer footprint is centered on research-data infrastructure rather than a
+  unified developer portal: the McGill University Dataverse is published through the
+  Borealis (Scholars Portal) Dataverse platform, which exposes the full Dataverse
+  Native and Search REST APIs over the McGill collection. Identity is federated
+  through a Shibboleth SAML single sign-on service. Most other institutional systems
+  (course catalogue, Minerva/Banner registration, library discovery) are gated behind
+  authentication or web UIs and do not publish open, documented public APIs.
+type: Index
+position: Consumer
+access: 3rd-Party
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/mcgill/refs/heads/main/apis.yml
+tags:
+  - Education
+  - Higher Education
+  - University
+  - Research Data
+  - Open Data
+  - Canada
+  - Quebec
+created: '2026-06-03'
+modified: '2026-06-03'
+specificationVersion: '0.19'
+apis:
+  - aid: mcgill:dataverse-native
+    name: McGill University Dataverse (Borealis) - Native API
+    description: >-
+      Dataverse Native REST API serving the McGill University Dataverse research-data
+      repository, hosted on the Borealis (Scholars Portal) Dataverse platform. Provides
+      programmatic access to the McGill collection, datasets, files, and metadata.
+      Verified live: GET /api/dataverses/mcgill returns the McGill collection record
+      as JSON.
+    humanURL: https://borealisdata.ca/guides/en/latest/api/native-api.html
+    baseURL: https://borealisdata.ca/api
+    tags: [ Research Data, Open Data, Dataverse, Repository, Metadata ]
+    properties:
+      - type: Documentation
+        url: https://borealisdata.ca/guides/en/latest/api/native-api.html
+      - type: Website
+        url: https://borealisdata.ca/dataverse/mcgill
+  - aid: mcgill:dataverse-search
+    name: McGill University Dataverse (Borealis) - Search API
+    description: >-
+      Dataverse Search REST API for discovering Dataverse collections, datasets, and
+      files within the Borealis platform that hosts the McGill University Dataverse.
+      Supports keyword, faceted, and geospatial search. Verified live: GET /api/search
+      returns JSON results.
+    humanURL: https://guides.dataverse.org/en/latest/api/search.html
+    baseURL: https://borealisdata.ca/api/search
+    tags: [ Research Data, Search, Open Data, Dataverse, Discovery ]
+    properties:
+      - type: Documentation
+        url: https://guides.dataverse.org/en/latest/api/search.html
+      - type: Website
+        url: https://borealisdata.ca/dataverse/mcgill
+  - aid: mcgill:shibboleth-sso
+    name: McGill Shibboleth SAML Single Sign-On
+    description: >-
+      McGill University Authentication Service, a Shibboleth Identity Provider offering
+      SAML 2.0 federated single sign-on for McGill web applications and federation
+      partners. This is an identity/SSO endpoint, not an open data API. Verified live:
+      the IdP host responds (HTTP 200).
+    humanURL: https://shibboleth.mcgill.ca/
+    tags: [ Identity, Authentication, SAML, SSO, Shibboleth ]
+    properties:
+      - type: Authentication
+        url: https://shibboleth.mcgill.ca/
+common:
+  - type: Website
+    url: https://www.mcgill.ca/
+  - type: Twitter
+    url: https://twitter.com/mcgillu
+  - type: LinkedIn
+    url: https://www.linkedin.com/school/mcgill-university/
+  - type: Authentication
+    url: https://shibboleth.mcgill.ca/
+  - type: Plans
+    url: plans/mcgill-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/mcgill-rate-limits.yml
+  - type: FinOps
+    url: finops/mcgill-finops.yml
+  - type: Review
+    url: review.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

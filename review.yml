@@ -1,0 +1,62 @@
+---
+name: McGill University
+description: McGill University public developer/API footprint review for APIs.json cataloging.
+url: https://raw.githubusercontent.com/api-evangelist/mcgill/refs/heads/main/review.yml
+created: '2026-06-03'
+modified: '2026-06-03'
+reviews:
+  - date: '2026-06-03'
+    rating: 2
+    summary: >-
+      McGill has no unified, open public developer portal. The strongest verifiable
+      public API surface is the McGill University Dataverse, hosted on the Borealis
+      (Scholars Portal) Dataverse platform, which exposes the standard Dataverse
+      Native and Search REST APIs over the McGill collection - both confirmed live
+      (GET /api/dataverses/mcgill returned a McGill collection JSON record; /api/search
+      returned 200). A Shibboleth SAML IdP for SSO is live but is an identity service,
+      not an open data API. An Azure API Management developer portal hostname surfaced
+      in search but did not resolve (connection refused), so it is not cataloged. A
+      github.com/mcgill org exists but has zero public repos and could not be verified
+      as officially McGill-owned, so it is not used as a pointer. An "eScholarship"
+      OAI-PMH path returned a SPA landing page rather than valid OAI-PMH XML, so it is
+      not cataloged. No fabricated endpoints; only live-verified surfaces included.
+    endpoints:
+      - url: https://borealisdata.ca/api/dataverses/mcgill
+        status: 200
+        note: Dataverse Native API - returned live JSON for the McGill University Dataverse collection.
+      - url: https://borealisdata.ca/api/search?q=mcgill&per_page=1
+        status: 200
+        note: Dataverse Search API - returned JSON search results.
+      - url: https://borealisdata.ca/guides/en/latest/api/native-api.html
+        status: 200
+        note: Dataverse Native API documentation (Borealis-hosted guides).
+      - url: https://guides.dataverse.org/en/latest/api/search.html
+        status: 200
+        note: Dataverse Search API documentation.
+      - url: https://borealisdata.ca/dataverse/mcgill
+        status: 200
+        note: McGill University Dataverse collection landing page.
+      - url: https://shibboleth.mcgill.ca/
+        status: 200
+        note: McGill Authentication Service - Shibboleth SAML SSO IdP (identity, not open API).
+      - url: https://www.mcgill.ca/
+        status: 200
+        note: Official institutional website.
+      - url: https://coursecatalogue.mcgill.ca/
+        status: 202
+        note: Public course catalogue web UI; no documented public API exposed.
+      - url: https://horizon.mcgill.ca/pban1/bwckctlg.p_disp_dyn_ctlg
+        status: 200
+        note: Banner/Minerva course catalogue web interface; no open developer API.
+      - url: https://mcgilluniversity.portal.azure-api.net/
+        status: 0
+        note: Azure API Management portal hostname from search did not resolve (connection refused).
+      - url: https://github.com/mcgill
+        status: 200
+        note: GitHub org exists but has 0 public repos and unverified official ownership; not used as pointer.
+      - url: https://github.com/mcgillu
+        status: 404
+        note: Referenced "official" McGill GitHub handle does not exist.
+      - url: https://escholarship.mcgill.ca/oai/request?verb=Identify
+        status: 200
+        note: Returned SPA HTML landing page, not valid OAI-PMH XML; no working public OAI-PMH confirmed.
