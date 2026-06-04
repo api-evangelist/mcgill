@@ -1,0 +1,46 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "mcgill": "https://www.mcgill.ca/#",
+    "dv": "https://borealisdata.ca/api#",
+    "@vocab": "https://borealisdata.ca/api#",
+
+    "name": "schema:name",
+    "url": "schema:url",
+    "description": "schema:description",
+    "affiliation": "schema:affiliation",
+    "creationDate": { "@id": "schema:dateCreated", "@type": "schema:DateTime" },
+    "published_at": { "@id": "schema:datePublished", "@type": "schema:DateTime" },
+
+    "Institution": "schema:CollegeOrUniversity",
+    "DataverseCollection": "schema:DataCatalog",
+    "Dataset": "schema:Dataset",
+    "DataFile": "schema:DataDownload",
+
+    "alias": "dv:alias",
+    "identifier": { "@id": "schema:identifier" },
+    "global_id": { "@id": "schema:identifier" },
+    "dataverseType": "dv:dataverseType",
+    "ownerId": "dv:ownerId",
+    "isReleased": "dv:isReleased",
+    "parentDataverseName": "dv:parentDataverseName",
+    "parentDataverseIdentifier": "dv:parentDataverseIdentifier",
+    "datasetCount": "dv:datasetCount",
+    "publicationStatuses": "dv:publicationStatuses",
+    "type": "dv:type",
+    "status": "dv:status",
+    "data": "dv:data",
+    "items": { "@id": "dv:items", "@container": "@set" },
+    "total_count": "dv:totalCount"
+  },
+  "@type": "Institution",
+  "name": "McGill University",
+  "url": "https://www.mcgill.ca/",
+  "DataverseCollection": {
+    "@type": "DataverseCollection",
+    "name": "McGill University Dataverse",
+    "alias": "mcgill",
+    "url": "https://borealisdata.ca/dataverse/mcgill"
+  }
+}

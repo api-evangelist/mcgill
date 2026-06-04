@@ -1,0 +1,55 @@
+extends: [[spectral:oas, off]]
+formats: [oas3]
+documentationUrl: https://borealisdata.ca/guides/en/latest/api/native-api.html
+rules:
+  mcgill-info-title-present:
+    description: API document must declare a title.
+    given: $.info
+    severity: error
+    then:
+      field: title
+      function: truthy
+  mcgill-info-version-present:
+    description: API document must declare a version (mirrors the Dataverse build version).
+    given: $.info
+    severity: error
+    then:
+      field: version
+      function: truthy
+  mcgill-server-is-borealis:
+    description: The server URL must be the Borealis Dataverse API base hosting the McGill collection.
+    given: $.servers[*]
+    severity: error
+    then:
+      field: url
+      function: pattern
+      functionOptions:
+        match: "^https://borealisdata\\.ca/api"
+  mcgill-operation-id-present:
+    description: Every operation should carry the upstream Dataverse operationId.
+    given: $.paths[*][get,post,put,delete]
+    severity: warn
+    then:
+      field: operationId
+      function: truthy
+  mcgill-operation-tagged:
+    description: Every operation should be tagged (dataverses, search, info).
+    given: $.paths[*][get,post,put,delete]
+    severity: warn
+    then:
+      field: tags
+      function: truthy
+  mcgill-json-responses-only:
+    description: Public Dataverse responses are JSON; documented 200 responses must offer application/json.
+    given: $.paths[*][get,post,put,delete].responses.200.content
+    severity: warn
+    then:
+      field: application/json
+      function: truthy
+  mcgill-envelope-status-field:
+    description: Response envelope schema must expose the Dataverse 'status' field.
+    given: $.components.schemas.ApiResponse.properties
+    severity: warn
+    then:
+      field: status
+      function: truthy

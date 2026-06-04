@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/mcgill/main/json-schema/mcgill-dataverse-schema.json",
+  "title": "Dataverse Collection",
+  "description": "A Dataverse collection record returned under the 'data' key of the Dataverse Native API, e.g. the McGill University Dataverse (alias 'mcgill').",
+  "type": "object",
+  "required": ["id", "alias", "name"],
+  "properties": {
+    "id": { "type": "integer", "description": "Internal numeric id of the collection." },
+    "alias": { "type": "string", "description": "URL-safe identifier of the collection (e.g. 'mcgill')." },
+    "name": { "type": "string", "description": "Display name of the collection." },
+    "affiliation": { "type": "string", "description": "Affiliated institution." },
+    "dataverseType": { "type": "string", "description": "Category of the collection (e.g. ORGANIZATIONS_INSTITUTIONS)." },
+    "description": { "type": "string", "description": "HTML description of the collection." },
+    "ownerId": { "type": "integer", "description": "Internal id of the parent collection." },
+    "creationDate": { "type": "string", "format": "date-time", "description": "When the collection was created." },
+    "permissionRoot": { "type": "boolean" },
+    "isMetadataBlockRoot": { "type": "boolean" },
+    "isFacetRoot": { "type": "boolean" },
+    "isReleased": { "type": "boolean", "description": "Whether the collection is published." },
+    "effectiveRequiresFilesToPublishDataset": { "type": "boolean" },
+    "theme": {
+      "type": "object",
+      "description": "Branding/theme settings for the collection.",
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

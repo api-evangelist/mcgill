@@ -26,6 +26,13 @@ tags:
   - Quebec
 created: '2026-06-03'
 modified: '2026-06-03'
+properties:
+  - type: x-vocabulary
+    url: vocabulary/mcgill-vocabulary.yml
+  - type: x-json-ld
+    url: json-ld/mcgill-context.jsonld
+  - type: x-rules
+    url: rules/mcgill-rules.yml
 specificationVersion: '0.19'
 apis:
   - aid: mcgill:dataverse-native
@@ -44,6 +51,12 @@ apis:
         url: https://borealisdata.ca/guides/en/latest/api/native-api.html
       - type: Website
         url: https://borealisdata.ca/dataverse/mcgill
+      - type: OpenAPI
+        url: openapi/mcgill-dataverse-native.yaml
+      - type: x-json-schema
+        url: json-schema/mcgill-dataverse-schema.json
+      - type: x-example
+        url: examples/mcgill-get-dataverse-example.json
   - aid: mcgill:dataverse-search
     name: McGill University Dataverse (Borealis) - Search API
     description: >-
@@ -59,6 +72,12 @@ apis:
         url: https://guides.dataverse.org/en/latest/api/search.html
       - type: Website
         url: https://borealisdata.ca/dataverse/mcgill
+      - type: OpenAPI
+        url: openapi/mcgill-dataverse-search.yaml
+      - type: x-json-schema
+        url: json-schema/mcgill-search-item-schema.json
+      - type: x-example
+        url: examples/mcgill-search-example.json
   - aid: mcgill:shibboleth-sso
     name: McGill Shibboleth SAML Single Sign-On
     description: >-

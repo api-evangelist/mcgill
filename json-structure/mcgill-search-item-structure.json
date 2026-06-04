@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/mcgill/main/json-structure/mcgill-search-item-structure.json",
+  "name": "SearchItem",
+  "description": "JSON Structure for a single Dataverse Search API result item (dataverse, dataset, or file).",
+  "type": "object",
+  "properties": {
+    "name": { "type": "string", "description": "Display name of the result." },
+    "type": { "type": "string", "description": "Kind of object: dataverse, dataset, or file." },
+    "url": { "type": "string", "description": "Public URL of the object." },
+    "identifier": { "type": "string", "description": "Local identifier." },
+    "global_id": { "type": "string", "description": "Persistent identifier for datasets." },
+    "published_at": { "type": "string", "format": "date-time", "description": "Publication timestamp." },
+    "publicationStatuses": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Publication status flags."
+    },
+    "affiliation": { "type": "string", "description": "Affiliated institution." },
+    "parentDataverseName": { "type": "string", "description": "Name of the parent collection." },
+    "parentDataverseIdentifier": { "type": "string", "description": "Alias of the parent collection." },
+    "datasetCount": { "type": "int32", "description": "Number of datasets for dataverse results." }
+  },
+  "required": ["name", "type"]
+}

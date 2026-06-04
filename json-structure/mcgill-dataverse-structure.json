@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/mcgill/main/json-structure/mcgill-dataverse-structure.json",
+  "name": "DataverseCollection",
+  "description": "JSON Structure for a Dataverse collection record (e.g. the McGill University Dataverse) from the Borealis Native API.",
+  "type": "object",
+  "properties": {
+    "id": { "type": "int64", "description": "Internal numeric id of the collection." },
+    "alias": { "type": "string", "description": "URL-safe identifier of the collection." },
+    "name": { "type": "string", "description": "Display name of the collection." },
+    "affiliation": { "type": "string", "description": "Affiliated institution." },
+    "dataverseType": { "type": "string", "description": "Category of the collection." },
+    "description": { "type": "string", "description": "HTML description of the collection." },
+    "ownerId": { "type": "int64", "description": "Internal id of the parent collection." },
+    "creationDate": { "type": "string", "format": "date-time", "description": "When the collection was created." },
+    "permissionRoot": { "type": "boolean" },
+    "isReleased": { "type": "boolean", "description": "Whether the collection is published." },
+    "theme": {
+      "type": "object",
+      "description": "Branding/theme settings.",
+      "additionalProperties": { "type": "string" }
+    }
+  },
+  "required": ["id", "alias", "name"]
+}

@@ -1,0 +1,57 @@
+vocabulary:
+  name: McGill University Dataverse (Borealis) Vocabulary
+  description: >-
+    Controlled vocabulary for the machine-readable surface of the McGill University
+    Dataverse, hosted on the Borealis (Scholars Portal) Dataverse platform. Terms
+    cover the Dataverse Native and Search REST APIs and their core research-data objects.
+  version: v6.8.1-SP
+  terms:
+    - term: Dataverse Collection
+      definition: >-
+        A container in the Dataverse platform that holds datasets and sub-collections.
+        The McGill University Dataverse (alias 'mcgill') is the top-level institutional collection.
+      tags: [collection, dataverse, repository]
+    - term: Dataset
+      definition: >-
+        A coherent set of data files plus descriptive metadata, identified by a
+        persistent global identifier (DOI), deposited within a collection.
+      tags: [dataset, research-data, doi]
+    - term: DataFile
+      definition: An individual file belonging to a dataset version.
+      tags: [file, research-data]
+    - term: Alias
+      definition: The URL-safe identifier of a collection (e.g. 'mcgill').
+      tags: [identifier, collection]
+    - term: Global ID
+      definition: The persistent identifier (DOI or handle) assigned to a published dataset.
+      tags: [identifier, doi, persistent]
+    - term: Subtree
+      definition: >-
+        A Search API parameter that scopes results to a collection and its descendants;
+        subtree=mcgill restricts search to the McGill University Dataverse.
+      tags: [search, scope, parameter]
+    - term: Facet
+      definition: A field used to filter and group search results (e.g. author, subject, publication year).
+      tags: [search, faceting, metadata]
+    - term: Metadata Block
+      definition: >-
+        A named group of metadata fields (e.g. citation, geospatial) attached to datasets within a collection.
+      tags: [metadata, schema]
+    - term: API Token
+      definition: >-
+        A per-user secret passed in the X-Dataverse-key header to authenticate write and
+        private-data operations against the Native API.
+      tags: [authentication, security, token]
+    - term: Response Envelope
+      definition: >-
+        The standard JSON wrapper returned by the Dataverse API containing a 'status'
+        ('OK' or 'ERROR') and a 'data' payload (or 'message' on error).
+      tags: [response, envelope, json]
+    - term: Search Service
+      definition: A configured search backend exposed via the Search API services endpoint.
+      tags: [search, service]
+    - term: Shibboleth SSO
+      definition: >-
+        McGill's Shibboleth SAML 2.0 Identity Provider used for federated single sign-on
+        to the Dataverse deposit workflow and other McGill applications.
+      tags: [authentication, saml, sso, identity]

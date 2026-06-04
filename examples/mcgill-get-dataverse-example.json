@@ -1,0 +1,28 @@
+{
+  "status": "OK",
+  "data": {
+    "id": 75141,
+    "alias": "mcgill",
+    "name": "McGill University Dataverse",
+    "affiliation": "McGill University",
+    "permissionRoot": true,
+    "description": "<h1>About the McGill University Dataverse</h1> The McGill University Dataverse is a research data repository for McGill faculty, students, and staff. Files are held in a secure environment on Canadian servers.",
+    "dataverseType": "ORGANIZATIONS_INSTITUTIONS",
+    "isMetadataBlockRoot": false,
+    "isFacetRoot": false,
+    "ownerId": 1,
+    "creationDate": "2019-04-11T18:48:19Z",
+    "theme": {
+      "id": 87,
+      "logo": "McGill_Logo_yRG_YpzYg.png",
+      "tagline": "McGill Libraries: Everything you need.",
+      "linkUrl": "https://mcgill.ca/library/",
+      "linkColor": "024f6d",
+      "textColor": "5d6771",
+      "backgroundColor": "ffffff",
+      "logoBackgroundColor": "FFFFFF"
+    },
+    "effectiveRequiresFilesToPublishDataset": false,
+    "isReleased": true
+  }
+}

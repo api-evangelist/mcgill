@@ -1,0 +1,24 @@
+{
+  "status": "OK",
+  "data": {
+    "q": "*",
+    "total_count": 14383,
+    "start": 0,
+    "spelling_alternatives": {},
+    "items": [
+      {
+        "name": "Jenn Riley LIS Research Projects",
+        "type": "dataverse",
+        "url": "https://borealisdata.ca/dataverse/jenlrile",
+        "identifier": "jenlrile",
+        "published_at": "2018-07-27T15:57:14Z",
+        "publicationStatuses": ["Published"],
+        "affiliation": "McGill University",
+        "parentDataverseName": "McGill University Dataverse",
+        "parentDataverseIdentifier": "mcgill",
+        "datasetCount": 1
+      }
+    ],
+    "count_in_response": 1
+  }
+}

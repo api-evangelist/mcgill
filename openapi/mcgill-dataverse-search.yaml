@@ -1,0 +1,220 @@
+openapi: 3.0.3
+info:
+  title: McGill University Dataverse (Borealis) - Search API
+  description: Dataverse Search REST API for discovering collections, datasets, and
+    files within the Borealis (Scholars Portal) platform hosting the McGill University
+    Dataverse. Scope queries to McGill with subtree=mcgill. Faithful subset of the
+    upstream Dataverse OpenAPI (Dataverse v6.8.1-SP), with response schemas derived
+    from verified live responses.
+  version: v6.8.1-SP
+  contact:
+    name: McGill Research Data Management
+    email: rdm.library@mcgill.ca
+  license:
+    name: Apache-2.0
+    url: https://github.com/IQSS/dataverse/blob/develop/LICENSE.md
+servers:
+- url: https://borealisdata.ca/api
+  description: Borealis (Scholars Portal) Dataverse hosting the McGill University
+    Dataverse
+tags:
+- name: search
+  description: Search collections, datasets, and files.
+paths:
+  /search:
+    get:
+      operationId: Search_search
+      parameters:
+      - name: fq
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+      - name: geo_point
+        in: query
+        schema:
+          type: string
+      - name: geo_radius
+        in: query
+        schema:
+          type: string
+      - name: metadata_fields
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+      - name: order
+        in: query
+        schema:
+          type: string
+      - name: per_page
+        in: query
+        schema:
+          format: int32
+          type: integer
+      - name: q
+        in: query
+        schema:
+          type: string
+      - name: query_entities
+        in: query
+        schema:
+          default: true
+          type: boolean
+      - name: search_service
+        in: query
+        schema:
+          type: string
+      - name: show_api_urls
+        in: query
+        schema:
+          type: boolean
+      - name: show_collections
+        in: query
+        schema:
+          type: boolean
+      - name: show_entity_ids
+        in: query
+        schema:
+          type: boolean
+      - name: show_facets
+        in: query
+        schema:
+          type: boolean
+      - name: show_relevance
+        in: query
+        schema:
+          type: boolean
+      - name: show_type_counts
+        in: query
+        schema:
+          type: boolean
+      - name: sort
+        in: query
+        schema:
+          type: string
+      - name: start
+        in: query
+        schema:
+          format: int32
+          type: integer
+      - name: subtree
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+      - name: type
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+      summary: Search the Dataverse installation
+      description: Keyword, faceted, and geospatial search across Dataverse collections,
+        datasets, and files. Scope to the McGill University Dataverse with subtree=mcgill.
+      responses:
+        '200':
+          description: Search results.
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/ApiResponse'
+                - type: object
+                  properties:
+                    data:
+                      $ref: '#/components/schemas/SearchResponseData'
+  /search/services:
+    get:
+      operationId: Search_getSearchEngines
+      summary: List available search services
+      responses:
+        '200':
+          description: Available search services.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+components:
+  schemas:
+    ApiResponse:
+      type: object
+      description: Standard Dataverse JSON response envelope.
+      properties:
+        status:
+          type: string
+          enum:
+          - OK
+          - ERROR
+          description: Overall request status.
+        data:
+          type: object
+          description: Payload object (shape depends on the endpoint).
+          additionalProperties: true
+        message:
+          type: string
+          description: Human-readable message, present on errors.
+      required:
+      - status
+    SearchResponseData:
+      type: object
+      description: Search results payload returned under 'data'.
+      properties:
+        q:
+          type: string
+          description: Echo of the submitted query.
+        total_count:
+          type: integer
+          description: Total number of matching results.
+        start:
+          type: integer
+          description: Zero-based offset of the first returned item.
+        count_in_response:
+          type: integer
+          description: Number of items in this page.
+        spelling_alternatives:
+          type: object
+          additionalProperties: true
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchItem'
+    SearchItem:
+      type: object
+      description: A single search result (a dataverse, dataset, or file).
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+          - dataverse
+          - dataset
+          - file
+          description: Kind of object.
+        url:
+          type: string
+          format: uri
+        identifier:
+          type: string
+        global_id:
+          type: string
+          description: Persistent identifier (datasets).
+        published_at:
+          type: string
+          format: date-time
+        publicationStatuses:
+          type: array
+          items:
+            type: string
+        affiliation:
+          type: string
+        parentDataverseName:
+          type: string
+        parentDataverseIdentifier:
+          type: string
+        datasetCount:
+          type: integer

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/mcgill/main/json-schema/mcgill-search-item-schema.json",
+  "title": "Dataverse Search Item",
+  "description": "A single result item from the Dataverse Search API. May represent a dataverse collection, a dataset, or a file.",
+  "type": "object",
+  "required": ["name", "type"],
+  "properties": {
+    "name": { "type": "string", "description": "Display name of the result." },
+    "type": { "type": "string", "enum": ["dataverse", "dataset", "file"], "description": "Kind of object." },
+    "url": { "type": "string", "format": "uri", "description": "Public URL of the object." },
+    "identifier": { "type": "string", "description": "Local identifier (collection alias or file id)." },
+    "global_id": { "type": "string", "description": "Persistent identifier (DOI/handle) for datasets." },
+    "published_at": { "type": "string", "format": "date-time", "description": "Publication timestamp." },
+    "publicationStatuses": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Publication status flags, e.g. ['Published']."
+    },
+    "affiliation": { "type": "string", "description": "Affiliated institution." },
+    "parentDataverseName": { "type": "string", "description": "Name of the parent collection." },
+    "parentDataverseIdentifier": { "type": "string", "description": "Alias of the parent collection." },
+    "datasetCount": { "type": "integer", "description": "Number of datasets (for dataverse results)." }
+  },
+  "additionalProperties": true
+}

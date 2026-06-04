@@ -1,0 +1,199 @@
+openapi: 3.0.3
+info:
+  title: McGill University Dataverse (Borealis) - Native API
+  description: Dataverse Native REST API serving the McGill University Dataverse research-data
+    repository on the Borealis (Scholars Portal) platform. Provides programmatic access
+    to the McGill collection, its contents, and installation info. Faithful subset
+    of the upstream Dataverse OpenAPI (Dataverse v6.8.1-SP); response schemas derived
+    from verified live responses. Write/admin operations require an X-Dataverse-key
+    API token.
+  version: v6.8.1-SP
+  contact:
+    name: McGill Research Data Management
+    email: rdm.library@mcgill.ca
+  license:
+    name: Apache-2.0
+    url: https://github.com/IQSS/dataverse/blob/develop/LICENSE.md
+servers:
+- url: https://borealisdata.ca/api
+  description: Borealis (Scholars Portal) Dataverse hosting the McGill University
+    Dataverse
+tags:
+- name: dataverses
+  description: Dataverse collection operations.
+- name: info
+  description: Installation metadata and metrics.
+paths:
+  /dataverses/{identifier}:
+    get:
+      operationId: Dataverses_getDataverse
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: returnChildCount
+        in: query
+        schema:
+          type: boolean
+      - name: returnOwners
+        in: query
+        schema:
+          type: boolean
+      summary: Get a Dataverse collection
+      description: Retrieve a Dataverse collection by its alias or id (e.g. 'mcgill'
+        for the McGill University Dataverse).
+      responses:
+        '200':
+          description: The collection record.
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/ApiResponse'
+                - type: object
+                  properties:
+                    data:
+                      $ref: '#/components/schemas/Dataverse'
+        '404':
+          description: Collection not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+  /dataverses/{identifier}/contents:
+    get:
+      operationId: Dataverses_listContent
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+      summary: List the contents of a collection
+      description: List the child collections and datasets directly within a collection.
+      responses:
+        '200':
+          description: Contents of the collection.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+  /info/version:
+    get:
+      operationId: Info_getInfo
+      summary: Get version and build information
+      description: Get version and build information
+      tags:
+      - info
+      responses:
+        '200':
+          description: Version and build information.
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/ApiResponse'
+                - type: object
+                  properties:
+                    data:
+                      $ref: '#/components/schemas/Version'
+  /info/metrics/dataverses:
+    get:
+      operationId: Metrics_getDataversesAllTime
+      parameters:
+      - name: parentAlias
+        in: query
+        schema:
+          type: string
+      summary: Get collection count metric
+      responses:
+        '200':
+          description: Metric result.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+components:
+  schemas:
+    ApiResponse:
+      type: object
+      description: Standard Dataverse JSON response envelope.
+      properties:
+        status:
+          type: string
+          enum:
+          - OK
+          - ERROR
+          description: Overall request status.
+        data:
+          type: object
+          description: Payload object (shape depends on the endpoint).
+          additionalProperties: true
+        message:
+          type: string
+          description: Human-readable message, present on errors.
+      required:
+      - status
+    Dataverse:
+      type: object
+      description: A Dataverse collection record (e.g. the McGill University Dataverse).
+      properties:
+        id:
+          type: integer
+          description: Internal numeric id of the collection.
+        alias:
+          type: string
+          description: URL-safe identifier of the collection (e.g. 'mcgill').
+        name:
+          type: string
+          description: Display name of the collection.
+        affiliation:
+          type: string
+          description: Affiliated institution.
+        dataverseType:
+          type: string
+          description: Category of the collection.
+        description:
+          type: string
+          description: HTML description of the collection.
+        ownerId:
+          type: integer
+          description: Internal id of the parent collection.
+        creationDate:
+          type: string
+          format: date-time
+          description: When the collection was created.
+        permissionRoot:
+          type: boolean
+        isReleased:
+          type: boolean
+          description: Whether the collection is published.
+        theme:
+          type: object
+          additionalProperties: true
+          description: Branding/theme settings.
+      required:
+      - id
+      - alias
+      - name
+    Version:
+      type: object
+      description: Dataverse software version and build info.
+      properties:
+        version:
+          type: string
+          description: Dataverse release version.
+        build:
+          type:
+          - string
+          - 'null'
+          description: Build identifier.
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Dataverse-key
+      description: Dataverse API token, required for write/admin and private-data
+        operations.
