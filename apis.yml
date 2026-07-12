@@ -91,6 +91,10 @@ apis:
       - type: Authentication
         url: https://shibboleth.mcgill.ca/
 common:
+  - type: DomainSecurity
+    url: security/mcgill-domain-security.yml
+  - type: Authentication
+    url: authentication/mcgill-authentication.yml
   - type: Website
     url: https://www.mcgill.ca/
   - type: Twitter

@@ -1,0 +1,16 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/mcgill-dataverse-native.yaml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+schemes:
+- name: ApiKeyAuth
+  type: apiKey
+  in: header
+  parameter: X-Dataverse-key
+  description: Dataverse API token, required for write/admin and private-data operations.
+  sources:
+  - openapi/mcgill-dataverse-native.yaml
