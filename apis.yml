@@ -91,6 +91,8 @@ apis:
       - type: Authentication
         url: https://shibboleth.mcgill.ca/
 common:
+  - type: AgenticAccess
+    url: agentic-access/mcgill-agentic-access.yml
   - type: DomainSecurity
     url: security/mcgill-domain-security.yml
   - type: Authentication
