@@ -1,11 +1,7 @@
 openapi: 3.0.3
 info:
-  title: McGill University Dataverse (Borealis) - Search API
-  description: Dataverse Search REST API for discovering collections, datasets, and
-    files within the Borealis (Scholars Portal) platform hosting the McGill University
-    Dataverse. Scope queries to McGill with subtree=mcgill. Faithful subset of the
-    upstream Dataverse OpenAPI (Dataverse v6.8.1-SP), with response schemas derived
-    from verified live responses.
+  title: McGill University Dataverse (Borealis) - Native Dataverses Search API
+  description: Dataverse Native REST API serving the McGill University Dataverse research-data repository on the Borealis (Scholars Portal) platform. Provides programmatic access to the McGill collection, its contents, and installation info. Faithful subset of the upstream Dataverse OpenAPI (Dataverse v6.8.1-SP); response schemas derived from verified live responses. Write/admin operations require an X-Dataverse-key API token.
   version: v6.8.1-SP
   contact:
     name: McGill Research Data Management
@@ -15,11 +11,9 @@ info:
     url: https://github.com/IQSS/dataverse/blob/develop/LICENSE.md
 servers:
 - url: https://borealisdata.ca/api
-  description: Borealis (Scholars Portal) Dataverse hosting the McGill University
-    Dataverse
+  description: Borealis (Scholars Portal) Dataverse hosting the McGill University Dataverse
 tags:
-- name: search
-  description: Search collections, datasets, and files.
+- name: Search
 paths:
   /search:
     get:
@@ -113,8 +107,7 @@ paths:
           items:
             type: string
       summary: Search the Dataverse installation
-      description: Keyword, faceted, and geospatial search across Dataverse collections,
-        datasets, and files. Scope to the McGill University Dataverse with subtree=mcgill.
+      description: Keyword, faceted, and geospatial search across Dataverse collections, datasets, and files. Scope to the McGill University Dataverse with subtree=mcgill.
       responses:
         '200':
           description: Search results.
@@ -127,6 +120,8 @@ paths:
                   properties:
                     data:
                       $ref: '#/components/schemas/SearchResponseData'
+      tags:
+      - Search
   /search/services:
     get:
       operationId: Search_getSearchEngines
@@ -138,27 +133,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApiResponse'
+      tags:
+      - Search
 components:
   schemas:
-    ApiResponse:
-      type: object
-      description: Standard Dataverse JSON response envelope.
-      properties:
-        status:
-          type: string
-          enum:
-          - OK
-          - ERROR
-          description: Overall request status.
-        data:
-          type: object
-          description: Payload object (shape depends on the endpoint).
-          additionalProperties: true
-        message:
-          type: string
-          description: Human-readable message, present on errors.
-      required:
-      - status
     SearchResponseData:
       type: object
       description: Search results payload returned under 'data'.
@@ -182,6 +160,25 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SearchItem'
+    ApiResponse:
+      type: object
+      description: Standard Dataverse JSON response envelope.
+      properties:
+        status:
+          type: string
+          enum:
+          - OK
+          - ERROR
+          description: Overall request status.
+        data:
+          type: object
+          description: Payload object (shape depends on the endpoint).
+          additionalProperties: true
+        message:
+          type: string
+          description: Human-readable message, present on errors.
+      required:
+      - status
     SearchItem:
       type: object
       description: A single search result (a dataverse, dataset, or file).
@@ -218,3 +215,9 @@ components:
           type: string
         datasetCount:
           type: integer
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Dataverse-key
+      description: Dataverse API token, required for write/admin and private-data operations.
