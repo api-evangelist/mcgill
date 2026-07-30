@@ -12,9 +12,22 @@ description: >-
   (course catalogue, Minerva/Banner registration, library discovery) are gated behind
   authentication or web UIs and do not publish open, documented public APIs.
 type: Index
+accessModel:
+  pricing: free
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Free · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 position: Consumer
 access: 3rd-Party
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/mcgill.png
 url: https://raw.githubusercontent.com/api-evangelist/mcgill/refs/heads/main/apis.yml
 tags:
   - Education
@@ -35,61 +48,94 @@ properties:
     url: rules/mcgill-rules.yml
 specificationVersion: '0.19'
 apis:
-  - aid: mcgill:dataverse-native
-    name: McGill University Dataverse (Borealis) - Native API
-    description: >-
-      Dataverse Native REST API serving the McGill University Dataverse research-data
-      repository, hosted on the Borealis (Scholars Portal) Dataverse platform. Provides
-      programmatic access to the McGill collection, datasets, files, and metadata.
-      Verified live: GET /api/dataverses/mcgill returns the McGill collection record
-      as JSON.
-    humanURL: https://borealisdata.ca/guides/en/latest/api/native-api.html
-    baseURL: https://borealisdata.ca/api
-    tags: [ Research Data, Open Data, Dataverse, Repository, Metadata ]
-    properties:
-      - type: Documentation
-        url: https://borealisdata.ca/guides/en/latest/api/native-api.html
-      - type: Website
-        url: https://borealisdata.ca/dataverse/mcgill
-      - type: OpenAPI
-        url: openapi/mcgill-dataverse-native.yaml
-      - type: x-json-schema
-        url: json-schema/mcgill-dataverse-schema.json
-      - type: x-example
-        url: examples/mcgill-get-dataverse-example.json
-  - aid: mcgill:dataverse-search
-    name: McGill University Dataverse (Borealis) - Search API
-    description: >-
-      Dataverse Search REST API for discovering Dataverse collections, datasets, and
-      files within the Borealis platform that hosts the McGill University Dataverse.
-      Supports keyword, faceted, and geospatial search. Verified live: GET /api/search
-      returns JSON results.
-    humanURL: https://guides.dataverse.org/en/latest/api/search.html
-    baseURL: https://borealisdata.ca/api/search
-    tags: [ Research Data, Search, Open Data, Dataverse, Discovery ]
-    properties:
-      - type: Documentation
-        url: https://guides.dataverse.org/en/latest/api/search.html
-      - type: Website
-        url: https://borealisdata.ca/dataverse/mcgill
-      - type: OpenAPI
-        url: openapi/mcgill-dataverse-search.yaml
-      - type: x-json-schema
-        url: json-schema/mcgill-search-item-schema.json
-      - type: x-example
-        url: examples/mcgill-search-example.json
-  - aid: mcgill:shibboleth-sso
-    name: McGill Shibboleth SAML Single Sign-On
-    description: >-
-      McGill University Authentication Service, a Shibboleth Identity Provider offering
-      SAML 2.0 federated single sign-on for McGill web applications and federation
-      partners. This is an identity/SSO endpoint, not an open data API. Verified live:
-      the IdP host responds (HTTP 200).
-    humanURL: https://shibboleth.mcgill.ca/
-    tags: [ Identity, Authentication, SAML, SSO, Shibboleth ]
-    properties:
-      - type: Authentication
-        url: https://shibboleth.mcgill.ca/
+- aid: mcgill:shibboleth-sso
+  name: McGill Shibboleth SAML Single Sign-On
+  description: >-
+    McGill University Authentication Service, a Shibboleth Identity Provider offering SAML 2.0 federated
+    single sign-on for McGill web applications and federation partners. This is an identity/SSO endpoint,
+    not an open data API. Verified live: the IdP host responds (HTTP 200).
+  humanURL: https://shibboleth.mcgill.ca/
+  tags:
+  - Identity
+  - Authentication
+  - SAML
+  - SSO
+  - Shibboleth
+  properties:
+  - type: Authentication
+    url: https://shibboleth.mcgill.ca/
+- aid: mcgill:mcgill-dataverses-api
+  name: McGill University Dataverses API
+  description: The Dataverses API from McGill University — 2 operation(s) for dataverses.
+  humanURL: https://borealisdata.ca/guides/en/latest/api/native-api.html
+  baseURL: https://borealisdata.ca/api
+  tags:
+  - Dataverses
+  properties:
+  - type: OpenAPI
+    url: openapi/mcgill-dataverses-api-openapi.yml
+  - type: Documentation
+    url: https://borealisdata.ca/guides/en/latest/api/native-api.html
+  - type: Website
+    url: https://borealisdata.ca/dataverse/mcgill
+  - type: x-json-schema
+    url: json-schema/mcgill-dataverse-schema.json
+  - type: x-example
+    url: examples/mcgill-get-dataverse-example.json
+  - type: Documentation
+    url: https://guides.dataverse.org/en/latest/api/search.html
+  - type: x-json-schema
+    url: json-schema/mcgill-search-item-schema.json
+  - type: x-example
+    url: examples/mcgill-search-example.json
+- aid: mcgill:mcgill-info-api
+  name: McGill University Info API
+  description: The Info API from McGill University — 2 operation(s) for info.
+  humanURL: https://borealisdata.ca/guides/en/latest/api/native-api.html
+  baseURL: https://borealisdata.ca/api
+  tags:
+  - Info
+  properties:
+  - type: OpenAPI
+    url: openapi/mcgill-info-api-openapi.yml
+  - type: Documentation
+    url: https://borealisdata.ca/guides/en/latest/api/native-api.html
+  - type: Website
+    url: https://borealisdata.ca/dataverse/mcgill
+  - type: x-json-schema
+    url: json-schema/mcgill-dataverse-schema.json
+  - type: x-example
+    url: examples/mcgill-get-dataverse-example.json
+  - type: Documentation
+    url: https://guides.dataverse.org/en/latest/api/search.html
+  - type: x-json-schema
+    url: json-schema/mcgill-search-item-schema.json
+  - type: x-example
+    url: examples/mcgill-search-example.json
+- aid: mcgill:mcgill-search-api
+  name: McGill University Search API
+  description: The Search API from McGill University — 2 operation(s) for search.
+  humanURL: https://borealisdata.ca/guides/en/latest/api/native-api.html
+  baseURL: https://borealisdata.ca/api
+  tags:
+  - Search
+  properties:
+  - type: OpenAPI
+    url: openapi/mcgill-search-api-openapi.yml
+  - type: Documentation
+    url: https://borealisdata.ca/guides/en/latest/api/native-api.html
+  - type: Website
+    url: https://borealisdata.ca/dataverse/mcgill
+  - type: x-json-schema
+    url: json-schema/mcgill-dataverse-schema.json
+  - type: x-example
+    url: examples/mcgill-get-dataverse-example.json
+  - type: Documentation
+    url: https://guides.dataverse.org/en/latest/api/search.html
+  - type: x-json-schema
+    url: json-schema/mcgill-search-item-schema.json
+  - type: x-example
+    url: examples/mcgill-search-example.json
 common:
   - type: AgenticAccess
     url: agentic-access/mcgill-agentic-access.yml
