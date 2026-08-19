@@ -1,0 +1,380 @@
+{
+  "item": [
+    {
+      "id": "a2d39eeb-234b-40ed-a96f-cade2bdc9c3d",
+      "name": "Search",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "78a8cd7c-cabe-4d81-8629-41f2beb2efa1",
+          "name": "Search the Dataverse installation",
+          "request": {
+            "name": "Search the Dataverse installation",
+            "description": {
+              "content": "Keyword, faceted, and geospatial search across Dataverse collections, datasets, and files. Scope to the McGill University Dataverse with subtree=mcgill.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fq",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "fq",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "geo_point",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "geo_radius",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "metadata_fields",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "metadata_fields",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "order",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "per_page",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "query_entities",
+                  "value": "true"
+                },
+                {
+                  "disabled": false,
+                  "key": "search_service",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "show_api_urls",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "show_collections",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "show_entity_ids",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "show_facets",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "show_relevance",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "show_type_counts",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "start",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "subtree",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "subtree",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e1b3e7ea-a6c3-4621-907d-3d235c07dfa8",
+              "name": "Search results.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fq",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fq",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "geo_point",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "geo_radius",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "metadata_fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "metadata_fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "order",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "per_page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query_entities",
+                      "value": "true"
+                    },
+                    {
+                      "key": "search_service",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "show_api_urls",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "show_collections",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "show_entity_ids",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "show_facets",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "show_relevance",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "show_type_counts",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "start",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "subtree",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subtree",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"ERROR\",\n  \"data\": {\n    \"q\": \"string\",\n    \"total_count\": 7774,\n    \"start\": 3416,\n    \"count_in_response\": 7608,\n    \"spelling_alternatives\": {\n      \"key_0\": 5646,\n      \"key_1\": 5259\n    },\n    \"items\": [\n      {\n        \"name\": \"string\",\n        \"type\": \"file\",\n        \"url\": \"https://gxeyxrUSdyMpONLd.efsqKExdqQWo2cXTQZrK9Z3pTxB7IJNew8BGaEYHrovL6i7CZKlqkwvYv8H.nhc6D\",\n        \"identifier\": \"string\",\n        \"global_id\": \"string\",\n        \"published_at\": \"2016-09-10T06:33:33.312Z\",\n        \"publicationStatuses\": [\n          \"string\",\n          \"string\"\n        ],\n        \"affiliation\": \"string\",\n        \"parentDataverseName\": \"string\",\n        \"parentDataverseIdentifier\": \"string\",\n        \"datasetCount\": 8895\n      },\n      {\n        \"name\": \"string\",\n        \"type\": \"dataset\",\n        \"url\": \"https://rVNgAQCqerGcLpNOF.zvfuuOcfjGlQaotqRLlM.LoohV2zz1EdRYWnGvxFkYRZTiw4vw,OEsml2p,HpZaOndUk\",\n        \"identifier\": \"string\",\n        \"global_id\": \"string\",\n        \"published_at\": \"1990-02-07T13:00:01.534Z\",\n        \"publicationStatuses\": [\n          \"string\",\n          \"string\"\n        ],\n        \"affiliation\": \"string\",\n        \"parentDataverseName\": \"string\",\n        \"parentDataverseIdentifier\": \"string\",\n        \"datasetCount\": 3767\n      }\n    ],\n    \"key_0\": true\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4c755a6d-58a1-4a31-8f68-fc17baa835f0",
+          "name": "List available search services",
+          "request": {
+            "name": "List available search services",
+            "description": {},
+            "url": {
+              "path": [
+                "search",
+                "services"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a370668b-4a69-41b3-9121-8a07ac06db56",
+              "name": "Available search services.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "services"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"OK\",\n  \"data\": {\n    \"key_0\": \"string\",\n    \"key_1\": 1155,\n    \"key_2\": \"string\",\n    \"key_3\": \"string\"\n  },\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://borealisdata.ca/api",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "c3655fc7-d78c-4bd3-8f62-9a62ece1dba1",
+    "name": "McGill University Dataverse (Borealis) - Native Dataverses Search API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Dataverse Native REST API serving the McGill University Dataverse research-data repository on the Borealis (Scholars Portal) platform. Provides programmatic access to the McGill collection, its contents, and installation info. Faithful subset of the upstream Dataverse OpenAPI (Dataverse v6.8.1-SP); response schemas derived from verified live responses. Write/admin operations require an X-Dataverse-key API token.\n\nContact Support:\n Name: McGill Research Data Management\n Email: rdm.library@mcgill.ca",
+      "type": "text/plain"
+    }
+  }
+}

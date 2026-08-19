@@ -1,0 +1,47 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "McGill University Dataverse (Borealis) - Native Dataverses Info API",
+    "version": "v6.8.1-SP"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Info",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get collection count metric",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://borealisdata.ca/api/info/metrics/dataverses",
+            "params": [
+              {
+                "name": "parentAlias",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get collection count metric"
+        },
+        {
+          "info": {
+            "name": "Get version and build information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://borealisdata.ca/api/info/version"
+          },
+          "docs": "Get version and build information"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
