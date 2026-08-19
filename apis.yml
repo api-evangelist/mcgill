@@ -46,7 +46,7 @@ properties:
     url: json-ld/mcgill-context.jsonld
   - type: x-rules
     url: rules/mcgill-rules.yml
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 apis:
 - aid: mcgill:shibboleth-sso
   name: McGill Shibboleth SAML Single Sign-On
