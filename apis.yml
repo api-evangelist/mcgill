@@ -1,168 +1,276 @@
 ---
 aid: mcgill
 name: McGill University
+x-type: university
+x-category: Public Research University
 description: >-
-  McGill University is a public research university in Montreal, Quebec, Canada,
-  ranked #64 in the QS World University Rankings 2025. Its public, machine-readable
-  developer footprint is centered on research-data infrastructure rather than a
-  unified developer portal: the McGill University Dataverse is published through the
-  Borealis (Scholars Portal) Dataverse platform, which exposes the full Dataverse
-  Native and Search REST APIs over the McGill collection. Identity is federated
-  through a Shibboleth SAML single sign-on service. Most other institutional systems
-  (course catalogue, Minerva/Banner registration, library discovery) are gated behind
-  authentication or web UIs and do not publish open, documented public APIs.
+  McGill University is a public research university in Montreal, Quebec, Canada, and one of
+  Canada's two U15 institutions in the global top 100. Its programmable footprint is small and
+  must be described honestly: McGill operates no developer portal, publishes no API key
+  programme, and runs no OAuth authorization server. Exactly one machine-readable surface is
+  operated by the institution itself — the Shibboleth SAML 2.0 identity provider at
+  shibboleth.mcgill.ca, whose federation metadata is served unauthenticated at /idp/shibboleth
+  and carries entityID and shibmd:Scope of mcgill.ca. Everything else that looks like a McGill
+  API is a platform McGill is a tenant on: eScholarship@McGill runs on Scholaris (Scholars
+  Portal / OCUL DSpace 7) at mcgill.scholaris.ca, which serves a DSpace REST root and a valid
+  OAI-PMH 2.0 endpoint; the McGill University Dataverse is a collection on Borealis
+  (borealisdata.ca), a consortial host shared with five other institutions in this catalog; the
+  course catalogue at coursecatalogue.mcgill.ca is a CourseLeaf instance CNAMEd to
+  mcgill-ca-public.courseleaf.com. Those relationships are real institutional facts and are
+  recorded as tenant surfaces — the data is McGill's, the contracts are not. Registration,
+  library discovery and HR run on Banner/Minerva, WorldCat and Workday behind authentication
+  with no public interface.
+x-coverage:
+  state: covered
+  reason: covered
+  detail: >-
+    Probed directly on 2026-08-30 and the profile is complete for what exists. One
+    institution-operated machine-readable surface was found and catalogued (the Shibboleth SAML
+    IdP, previously recorded only as a link with no contract). Three tenant relationships were
+    settled and recorded without saving the platforms' contracts. This repo previously held five
+    OpenAPI documents describing the Dataverse Native and Search APIs on borealisdata.ca — a
+    host the cohort audit shows is claimed by six institutions — plus twenty-one artifacts
+    derived from them; all were removed as vendor-operated. Nothing here is blocked, gated or
+    unreadable: McGill's footprint is genuinely this small, and the profile now says so.
+  evidence:
+  - url: https://shibboleth.mcgill.ca/idp/shibboleth
+    status: 200
+  - url: https://mcgill.scholaris.ca/server/oai/request?verb=Identify
+    status: 200
+  - url: https://mcgill.scholaris.ca/server/api
+    status: 200
+  - url: https://borealisdata.ca/dataverse/mcgill
+    status: 200
+  - url: https://coursecatalogue.mcgill.ca/ribbit/index.cgi?page=getcourse.rjs&code=COMP+202
+    status: 200
+  - url: https://www.mcgill.ca/
+    status: 200
+  - url: https://www.mcgill.ca/llms.txt
+    status: 404
+  - url: https://www.mcgill.ca/.well-known/security.txt
+    status: 404
+  - url: https://api.mcgill.ca/
+    status: 0
+  - url: https://data.mcgill.ca/
+    status: 0
+  - url: https://opendata.mcgill.ca/
+    status: 0
+  - url: https://shibboleth.mcgill.ca/idp/status
+    status: 403
 type: Index
 deliveryModel:
-  model: saas
+  model: self-hosted
   open_source: false
-  commercial: true
+  commercial: false
   callable_host: true
-  label: Hosted service · you call their endpoint
+  label: Institution-operated identity edge · federation metadata, no product
   confidence: high
   source:
   - openapi
-  - pricing
-  generated: '2026-08-28'
-  method: derived
+  - probe
+  generated: '2026-08-30'
+  method: probed
 accessModel:
   pricing: free
-  onboarding: self-serve
+  onboarding: none
   trial: false
   try_now: true
-  public: false
-  label: Free · Self-serve signup
+  public: true
+  label: Free · No registration · No developer programme
   confidence: high
   source:
-  - plans
+  - probe
   - authentication
-  generated: '2026-07-22'
-  method: derived
+  generated: '2026-08-30'
+  method: probed
 position: Consumer
 access: 3rd-Party
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/mcgill.png
 url: https://raw.githubusercontent.com/api-evangelist/mcgill/refs/heads/main/apis.yml
 tags:
-  - Education
-  - Higher Education
   - University
-  - Research Data
-  - Open Data
+  - Higher Education
+  - Education
   - Canada
   - Quebec
+  - U15
+  - Public Research University
+  - Identity Federation
+  - Research Repository
+  - Research Data
+  - Course Catalog
 created: '2026-06-03'
-modified: '2026-06-03'
+modified: '2026-08-30'
 properties:
-  - type: x-vocabulary
-    url: vocabulary/mcgill-vocabulary.yml
-  - type: x-json-ld
-    url: json-ld/mcgill-context.jsonld
   - type: x-rules
     url: rules/mcgill-rules.yml
+  - type: x-conformance
+    url: conformance/mcgill-conformance.yml
 specificationVersion: '0.23'
 apis:
-- aid: mcgill:shibboleth-sso
-  name: McGill Shibboleth SAML Single Sign-On
+- aid: mcgill:shibboleth-idp
+  name: McGill University Authentication Service — Shibboleth SAML 2.0 Identity Provider
+  x-operator: institution
+  x-operator-evidence: >-
+    shibboleth.mcgill.ca is under McGill's own registrable domain and resolves to 132.216.98.81
+    with no vendor CNAME. The published SAML EntityDescriptor declares
+    entityID="https://shibboleth.mcgill.ca/idp/shibboleth" and shibmd:Scope "mcgill.ca".
   description: >-
-    McGill University Authentication Service, a Shibboleth Identity Provider offering SAML 2.0 federated
-    single sign-on for McGill web applications and federation partners. This is an identity/SSO endpoint,
-    not an open data API. Verified live: the IdP host responds (HTTP 200).
-  humanURL: https://shibboleth.mcgill.ca/
+    McGill's SAML 2.0 identity provider and the only machine-readable surface in this profile
+    that McGill itself operates. The federation metadata document at /idp/shibboleth is served
+    unauthenticated (HTTP 200, application/xml, 8,995 bytes on 2026-08-30) and publishes signing
+    and encryption keys, bilingual mdui:UIInfo display names, the mcgill.ca scope, and every
+    SingleSignOnService and SingleLogoutService binding the IdP supports. This is an identity
+    edge, not a data API — and it is exactly the surface class universities operate and catalogs
+    routinely miss.
+  humanURL: https://www.mcgill.ca/it/
+  baseURL: https://shibboleth.mcgill.ca
   tags:
   - Identity
+  - Identity Federation
   - Authentication
   - SAML
   - SSO
   - Shibboleth
   properties:
-  - type: Authentication
-    url: https://shibboleth.mcgill.ca/
-- aid: mcgill:mcgill-dataverses-api
-  name: McGill University Dataverses API
-  description: The Dataverses API from McGill University — 2 operation(s) for dataverses.
-  humanURL: https://borealisdata.ca/guides/en/latest/api/native-api.html
-  baseURL: https://borealisdata.ca/api
-  tags:
-  - Dataverses
-  properties:
   - type: OpenAPI
-    url: openapi/mcgill-dataverses-api-openapi.yml
-  - type: Documentation
-    url: https://borealisdata.ca/guides/en/latest/api/native-api.html
-  - type: Website
-    url: https://borealisdata.ca/dataverse/mcgill
-  - type: x-json-schema
-    url: json-schema/mcgill-dataverse-schema.json
-  - type: x-example
-    url: examples/mcgill-get-dataverse-example.json
-  - type: Documentation
-    url: https://guides.dataverse.org/en/latest/api/search.html
-  - type: x-json-schema
-    url: json-schema/mcgill-search-item-schema.json
-  - type: x-example
-    url: examples/mcgill-search-example.json
-- aid: mcgill:mcgill-info-api
-  name: McGill University Info API
-  description: The Info API from McGill University — 2 operation(s) for info.
-  humanURL: https://borealisdata.ca/guides/en/latest/api/native-api.html
-  baseURL: https://borealisdata.ca/api
-  tags:
-  - Info
-  properties:
-  - type: OpenAPI
-    url: openapi/mcgill-info-api-openapi.yml
-  - type: Documentation
-    url: https://borealisdata.ca/guides/en/latest/api/native-api.html
-  - type: Website
-    url: https://borealisdata.ca/dataverse/mcgill
-  - type: x-json-schema
-    url: json-schema/mcgill-dataverse-schema.json
-  - type: x-example
-    url: examples/mcgill-get-dataverse-example.json
-  - type: Documentation
-    url: https://guides.dataverse.org/en/latest/api/search.html
-  - type: x-json-schema
-    url: json-schema/mcgill-search-item-schema.json
-  - type: x-example
-    url: examples/mcgill-search-example.json
-- aid: mcgill:mcgill-search-api
-  name: McGill University Search API
-  description: The Search API from McGill University — 2 operation(s) for search.
-  humanURL: https://borealisdata.ca/guides/en/latest/api/native-api.html
-  baseURL: https://borealisdata.ca/api
-  tags:
-  - Search
-  properties:
-  - type: OpenAPI
-    url: openapi/mcgill-search-api-openapi.yml
-  - type: Documentation
-    url: https://borealisdata.ca/guides/en/latest/api/native-api.html
-  - type: Website
-    url: https://borealisdata.ca/dataverse/mcgill
-  - type: x-json-schema
-    url: json-schema/mcgill-dataverse-schema.json
-  - type: x-example
-    url: examples/mcgill-get-dataverse-example.json
-  - type: Documentation
-    url: https://guides.dataverse.org/en/latest/api/search.html
-  - type: x-json-schema
-    url: json-schema/mcgill-search-item-schema.json
-  - type: x-example
-    url: examples/mcgill-search-example.json
-common:
-  - type: AgenticAccess
-    url: agentic-access/mcgill-agentic-access.yml
-  - type: DomainSecurity
-    url: security/mcgill-domain-security.yml
+    url: openapi/mcgill-shibboleth-idp-openapi.yml
+  - type: IdentityFederation
+    url: https://shibboleth.mcgill.ca/idp/shibboleth
   - type: Authentication
     url: authentication/mcgill-authentication.yml
+  - type: x-conformance
+    url: conformance/mcgill-conformance.yml
+  - type: x-example
+    url: examples/mcgill-shibboleth-idp-metadata-example.xml
+  - type: Website
+    url: https://shibboleth.mcgill.ca/
+- aid: mcgill:escholarship-scholaris
+  name: eScholarship@McGill on Scholaris (tenant)
+  x-operator: tenant
+  x-operator-evidence: >-
+    mcgill.scholaris.ca is an institution-specific subdomain on the Scholaris platform (Scholars
+    Portal / OCUL) and resolves via public-proxy.scholaris.ca. escholarship.mcgill.ca, McGill's
+    own hostname, CNAMEs to nproxy.scholarsportal.info and redirects here. The OAI-PMH Identify
+    response names the repository "eScholarship@McGill" with adminEmail
+    escholarship.library@mcgill.ca — McGill's content and McGill's contact on a consortial
+    DSpace 7 deployment McGill does not engineer.
+  description: >-
+    McGill's institutional research repository, running as a tenant on Scholaris. It exposes a
+    DSpace REST (HAL) root at /server/api and a conformant OAI-PMH 2.0 endpoint at
+    /server/oai/request advertising thirteen metadata prefixes (oai_dc, qdc, mods, mets, didl,
+    ore, xoai, dim, rdf, marc, etdms, rioxx, uketd_dc). No contract is saved under McGill: the
+    DSpace REST and OAI-PMH interfaces are the platform's and belong to DSpace, not to this
+    institution. Recorded because the repository, its records and its DOIs are genuinely
+    McGill's — this is one of the few programmable surfaces the university actually has.
+  humanURL: https://mcgill.scholaris.ca/
+  baseURL: https://mcgill.scholaris.ca/server
+  tags:
+  - Research Repository
+  - Research Data
+  - OAI-PMH
+  - DSpace
+  - Scholaris
+  - Open Access
+  properties:
+  - type: ResearchRepository
+    url: https://mcgill.scholaris.ca/
+  - type: APIReference
+    url: https://mcgill.scholaris.ca/server/api
+  - type: x-oai-pmh
+    url: https://mcgill.scholaris.ca/server/oai/request?verb=Identify
+  - type: x-conformance
+    url: conformance/mcgill-conformance.yml
+- aid: mcgill:dataverse-borealis
+  name: McGill University Dataverse on Borealis (tenant)
+  x-operator: tenant
+  x-operator-evidence: >-
+    borealisdata.ca is a consortial host operated by Scholars Portal / OCUL and resolves to
+    142.1.121.150 (University of Toronto address space). The cohort audit records the same host
+    claimed by five other institutions in this catalog, so it cannot be McGill-specific. The
+    McGill collection at /dataverse/mcgill is McGill's; the API serving it is Dataverse's.
+  description: >-
+    McGill's research-data collection on Borealis, the Canadian consortial Dataverse repository.
+    The collection, its datasets and its DOIs are McGill's. The Dataverse Native and Search REST
+    APIs that serve it are the Dataverse project's contract, deployed once by Scholars Portal
+    and shared by every Borealis member — which is why no OpenAPI is saved under this
+    institution. This repo previously held five such documents plus twenty-one derived
+    artifacts, all attributed to McGill; they have been removed. Scope a Borealis search to this
+    institution with subtree=mcgill.
+  humanURL: https://borealisdata.ca/dataverse/mcgill
+  baseURL: https://borealisdata.ca/api
+  tags:
+  - Research Repository
+  - Research Data
+  - Dataverse
+  - Borealis
+  - Open Data
+  properties:
+  - type: ResearchRepository
+    url: https://borealisdata.ca/dataverse/mcgill
+  - type: Documentation
+    url: https://borealisdata.ca/guides/en/latest/api/native-api.html
+- aid: mcgill:coursecatalogue-courseleaf
+  name: McGill Course Catalogue on CourseLeaf (tenant)
+  x-operator: tenant
+  x-operator-evidence: >-
+    coursecatalogue.mcgill.ca is McGill's own hostname CNAMEd to mcgill-ca-public.courseleaf.com
+    (Leepfrog Technologies) — an institution-branded instance on a vendor platform, the same
+    shape as a repository CNAMEd to a hosted DSpace.
+  description: >-
+    McGill's official course catalogue, published on CourseLeaf. It carries an undocumented but
+    live machine-readable course-detail endpoint — GET /ribbit/index.cgi?page=getcourse.rjs with
+    a space-separated course code returns XML with a CDATA course block (verified 200,
+    text/xml, for COMP 202 and BIOL 112 on 2026-08-30; an unknown code returns an empty
+    courseinfo element, also 200). No contract is saved: the endpoint is CourseLeaf's product
+    surface, identical across every CourseLeaf customer, and saving it under McGill would credit
+    the institution with a vendor's design. Recorded because the catalogue data is McGill's and
+    a course catalogue is one of the surface classes a university genuinely operates.
+  humanURL: https://coursecatalogue.mcgill.ca/
+  baseURL: https://coursecatalogue.mcgill.ca
+  tags:
+  - Course Catalog
+  - Registrar
+  - CourseLeaf
+  - Academic
+  properties:
+  - type: CourseCatalog
+    url: https://coursecatalogue.mcgill.ca/
+  - type: Website
+    url: https://www.mcgill.ca/students/courses/
+common:
   - type: Website
     url: https://www.mcgill.ca/
-  - type: Twitter
-    url: https://twitter.com/mcgillu
+  - type: IdentityFederation
+    url: https://shibboleth.mcgill.ca/idp/shibboleth
+  - type: ResearchRepository
+    url: https://mcgill.scholaris.ca/
+  - type: OpenData
+    url: https://borealisdata.ca/dataverse/mcgill
+  - type: CourseCatalog
+    url: https://coursecatalogue.mcgill.ca/
+  - type: LibraryCatalog
+    url: https://www.mcgill.ca/libraries/
+  - type: AITooling
+    url: https://www.mcgill.ca/it/ai
+  - type: Authentication
+    url: authentication/mcgill-authentication.yml
+  - type: DomainSecurity
+    url: security/mcgill-domain-security.yml
+  - type: PrivacyPolicy
+    url: https://www.mcgill.ca/privacy-notice
+  - type: TermsOfService
+    url: https://www.mcgill.ca/secretariat/repository-university-policies-and-regulations
+  - type: Support
+    url: https://www.mcgill.ca/it/support
+  - type: Blog
+    url: https://www.mcgill.ca/newsroom/
+  - type: BlogRSS
+    url: https://www.mcgill.ca/newsroom/rss.xml
   - type: LinkedIn
     url: https://www.linkedin.com/school/mcgill-university/
-  - type: Authentication
-    url: https://shibboleth.mcgill.ca/
+  - type: Twitter
+    url: https://x.com/mcgillu
   - type: Plans
     url: plans/mcgill-plans-pricing.yml
   - type: RateLimits
