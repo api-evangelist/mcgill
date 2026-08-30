@@ -1,6 +1,15 @@
+# McGill University — Spectral ruleset
+# generated: '2026-08-30'
+# method: generated
+# source: openapi/mcgill-shibboleth-idp-openapi.yml
+#
+# Measured from the ONE institution-operated contract in this repo, the Shibboleth SAML
+# identity provider at shibboleth.mcgill.ca. It replaces a ruleset that pinned every server
+# URL to https://borealisdata.ca/api — a vendor host shared by six Borealis member
+# institutions — and so encoded a vendor's contract as McGill's convention.
 extends: [[spectral:oas, off]]
 formats: [oas3]
-documentationUrl: https://borealisdata.ca/guides/en/latest/api/native-api.html
+documentationUrl: https://www.mcgill.ca/it/
 rules:
   mcgill-info-title-present:
     description: API document must declare a title.
@@ -10,46 +19,59 @@ rules:
       field: title
       function: truthy
   mcgill-info-version-present:
-    description: API document must declare a version (mirrors the Dataverse build version).
+    description: API document must declare a version.
     given: $.info
     severity: error
     then:
       field: version
       function: truthy
-  mcgill-server-is-borealis:
-    description: The server URL must be the Borealis Dataverse API base hosting the McGill collection.
+  mcgill-operator-declared:
+    description: >-
+      Every McGill contract must declare x-operator on info, so a vendor or tenant surface can
+      never be read as institution-operated engineering.
+    given: $.info
+    severity: error
+    then:
+      field: x-operator
+      function: truthy
+  mcgill-server-is-institution-owned:
+    description: >-
+      The server URL must be a host under McGill's own registrable domain. A contract based on
+      a vendor host does not belong in this repo.
     given: $.servers[*]
     severity: error
     then:
       field: url
       function: pattern
       functionOptions:
-        match: "^https://borealisdata\\.ca/api"
+        match: "^https://[a-z0-9.-]*mcgill\\.ca(/|$)"
   mcgill-operation-id-present:
-    description: Every operation should carry the upstream Dataverse operationId.
+    description: Every operation should carry an operationId.
     given: $.paths[*][get,post,put,delete]
     severity: warn
     then:
       field: operationId
       function: truthy
   mcgill-operation-tagged:
-    description: Every operation should be tagged (dataverses, search, info).
+    description: Every operation should be tagged.
     given: $.paths[*][get,post,put,delete]
     severity: warn
     then:
       field: tags
       function: truthy
-  mcgill-json-responses-only:
-    description: Public Dataverse responses are JSON; documented 200 responses must offer application/json.
-    given: $.paths[*][get,post,put,delete].responses.200.content
+  mcgill-operation-described:
+    description: >-
+      Every operation must carry a description; McGill's surfaces have no developer portal
+      behind them, so the contract is the only documentation.
+    given: $.paths[*][get,post,put,delete]
     severity: warn
     then:
-      field: application/json
+      field: description
       function: truthy
-  mcgill-envelope-status-field:
-    description: Response envelope schema must expose the Dataverse 'status' field.
-    given: $.components.schemas.ApiResponse.properties
-    severity: warn
+  mcgill-observed-status-documented:
+    description: Every operation must document at least one response status.
+    given: $.paths[*][get,post,put,delete]
+    severity: error
     then:
-      field: status
+      field: responses
       function: truthy

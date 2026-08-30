@@ -1,16 +1,86 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/mcgill-dataverse-native.yaml
+---
+generated: '2026-08-30'
+modified: '2026-08-30'
+method: probed
+source: >-
+  https://shibboleth.mcgill.ca/idp/shibboleth (SAML 2.0 metadata, HTTP 200, 2026-08-30);
+  https://mcgill.scholaris.ca/server/api (DSpace REST root, HTTP 200, 2026-08-30);
+  https://mcgill.scholaris.ca/server/oai/request?verb=Identify (HTTP 200, 2026-08-30)
+provider: McGill University
+providerId: mcgill
+description: >-
+  Authentication posture across McGill University's machine-readable surfaces. McGill operates
+  no API key programme and no OAuth authorization server of its own. Its one institution-operated
+  authentication surface is a SAML 2.0 identity provider; every other reachable surface is either
+  fully unauthenticated read-only metadata or an authenticated area of a platform McGill is a
+  tenant on, where the credential is issued by the platform and not by McGill.
+
+
+  This file replaces an earlier version that described an X-Dataverse-key API token as McGill's
+  authentication scheme. That token is Dataverse's, issued by Borealis (Scholars Portal), and
+  attributing it to McGill credited the institution with a vendor's access-control design.
 summary:
   types:
-  - apiKey
-  api_key_in:
-  - header
+  - saml
+  - none
+  api_key_programme: false
+  oauth_authorization_server: false
+  institution_operated_schemes: 1
 schemes:
-- name: ApiKeyAuth
-  type: apiKey
-  in: header
-  parameter: X-Dataverse-key
-  description: Dataverse API token, required for write/admin and private-data operations.
+- name: ShibbolethSAML
+  type: saml
+  operator: institution
+  description: >-
+    SAML 2.0 web browser SSO against McGill's Shibboleth identity provider. Relying parties
+    configure trust from the published metadata; there is no client-credential or machine-to-machine
+    flow, and access is granted to registered service providers, not to arbitrary API clients.
+  entity_id: https://shibboleth.mcgill.ca/idp/shibboleth
+  metadata_url: https://shibboleth.mcgill.ca/idp/shibboleth
+  scope: mcgill.ca
+  bindings:
+  - urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect
+  - urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST
+  - urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST-SimpleSign
+  endpoints:
+  - type: SingleSignOnService
+    url: https://shibboleth.mcgill.ca/idp/profile/SAML2/Redirect/SSO
+  - type: SingleSignOnService
+    url: https://shibboleth.mcgill.ca/idp/profile/SAML2/POST/SSO
+  - type: SingleLogoutService
+    url: https://shibboleth.mcgill.ca/idp/profile/SAML2/Redirect/SLO
   sources:
-  - openapi/mcgill-dataverse-native.yaml
+  - openapi/mcgill-shibboleth-idp-openapi.yml
+- name: PublicMetadataAnonymous
+  type: none
+  operator: institution
+  description: >-
+    The SAML metadata document itself is served unauthenticated, as federation metadata must be.
+    No credential, no rate-limit header, no registration.
+  sources:
+  - openapi/mcgill-shibboleth-idp-openapi.yml
+tenant_platform_schemes:
+- name: ScholarisAnonymousRead
+  type: none
+  operator: tenant
+  platform: Scholaris (Scholars Portal / OCUL) — DSpace 7
+  description: >-
+    eScholarship@McGill serves its DSpace REST (HAL) root and its OAI-PMH endpoint without
+    authentication for public read. Deposit and administration are behind Scholaris accounts.
+    The scheme is DSpace's, not McGill's; recorded here as a tenant fact, not as McGill's design.
+  evidence:
+  - url: https://mcgill.scholaris.ca/server/api
+    status: 200
+  - url: https://mcgill.scholaris.ca/server/oai/request?verb=Identify
+    status: 200
+- name: BorealisDataverseToken
+  type: apiKey
+  operator: tenant
+  platform: Borealis (Scholars Portal / OCUL) — Dataverse
+  description: >-
+    The X-Dataverse-key header token governing write and private-data access to the McGill
+    University Dataverse. Issued by Borealis, defined by the Dataverse project, shared with every
+    other Borealis member institution. Recorded as the tenant relationship it is; NOT catalogued
+    as a McGill authentication scheme.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
