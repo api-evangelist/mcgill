@@ -204,6 +204,8 @@ apis:
   humanURL: https://www.mcgill.ca/it/
   baseURL: https://shibboleth.mcgill.ca
   tags:
+  - Metadata
+  tags_raw:
   - metadata
   properties:
   - type: OpenAPI
@@ -224,6 +226,8 @@ apis:
   humanURL: https://www.mcgill.ca/it/
   baseURL: https://shibboleth.mcgill.ca
   tags:
+  - SSO
+  tags_raw:
   - sso
   properties:
   - type: OpenAPI
@@ -244,6 +248,8 @@ apis:
   humanURL: https://www.mcgill.ca/it/
   baseURL: https://shibboleth.mcgill.ca
   tags:
+  - Status
+  tags_raw:
   - status
   properties:
   - type: OpenAPI
