@@ -1,0 +1,114 @@
+openapi: 3.2.0
+info:
+  title: McGill University Authentication Service — Shibboleth SAML…
+  description: The SAML 2.0 identity provider operated by McGill University at shibboleth.mcgill.ca.
+  version: '2026-08-30'
+  contact:
+    name: McGill IT Services
+    url: https://www.mcgill.ca/it/
+  x-operator: institution
+  x-operator-evidence: Host shibboleth.mcgill.ca is under McGill's own registrable domain and resolves to 132.216.98.81 (McGill address space, no vendor CNAME). SAML EntityDescriptor entityID is https://shibboleth.mcgill.ca/idp/shibboleth and shibmd:Scope is mcgill.ca.
+  x-method: probed
+  x-source: https://shibboleth.mcgill.ca/idp/shibboleth
+servers:
+- url: https://shibboleth.mcgill.ca
+  description: McGill University Authentication Service (Shibboleth IdP)
+tags:
+- name: SSO
+  description: SAML 2.0 single sign-on and single logout profile endpoints.
+paths:
+  /idp/profile/SAML2/Redirect/SSO:
+    get:
+      operationId: samlRedirectSso
+      summary: SAML 2.0 HTTP-Redirect single sign-on binding
+      description: 'The HTTP-Redirect SSO binding declared in the IdP metadata. It is a SAML profile endpoint, not a REST operation: it expects a deflated, base64-encoded SAMLRequest from a registered service provider. A bare unauthenticated GET with no SAMLRequest was observed returning 500 on 2026-08-30, which is the expected Shibboleth response to a malformed profile request and confirms the endpoint is live.'
+      tags:
+      - SSO
+      parameters:
+      - name: SAMLRequest
+        in: query
+        required: true
+        description: Deflated, base64-encoded SAML 2.0 AuthnRequest from a registered service provider.
+        schema:
+          type: string
+      - name: RelayState
+        in: query
+        required: false
+        description: Opaque state returned unmodified to the service provider.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: McGill authentication interface presented to the end user.
+          content:
+            text/html:
+              schema:
+                type: string
+        '500':
+          description: No or malformed SAMLRequest (observed for a bare GET).
+          content:
+            text/html:
+              schema:
+                type: string
+  /idp/profile/SAML2/POST/SSO:
+    post:
+      operationId: samlPostSso
+      summary: SAML 2.0 HTTP-POST single sign-on binding
+      description: The HTTP-POST SSO binding declared in the IdP metadata. Accepts a base64-encoded SAMLRequest as a form field from a registered service provider.
+      tags:
+      - SSO
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - SAMLRequest
+              properties:
+                SAMLRequest:
+                  type: string
+                  description: Base64-encoded SAML 2.0 AuthnRequest.
+                RelayState:
+                  type: string
+                  description: Opaque state returned unmodified to the service provider.
+      responses:
+        '200':
+          description: McGill authentication interface presented to the end user.
+          content:
+            text/html:
+              schema:
+                type: string
+        '500':
+          description: No or malformed SAMLRequest.
+          content:
+            text/html:
+              schema:
+                type: string
+  /idp/profile/SAML2/Redirect/SLO:
+    get:
+      operationId: samlRedirectSlo
+      summary: SAML 2.0 HTTP-Redirect single logout binding
+      description: The HTTP-Redirect single-logout binding declared in the IdP metadata. Accepts a deflated, base64-encoded SAML LogoutRequest or LogoutResponse.
+      tags:
+      - SSO
+      parameters:
+      - name: SAMLRequest
+        in: query
+        required: false
+        description: Deflated, base64-encoded SAML 2.0 LogoutRequest.
+        schema:
+          type: string
+      - name: SAMLResponse
+        in: query
+        required: false
+        description: Deflated, base64-encoded SAML 2.0 LogoutResponse.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Logout processed; status page or redirect returned to the user agent.
+          content:
+            text/html:
+              schema:
+                type: string

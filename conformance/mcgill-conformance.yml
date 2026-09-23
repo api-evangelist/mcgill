@@ -1,0 +1,111 @@
+---
+specification: API Evangelist Conformance
+specificationVersion: '0.1'
+provider: McGill University
+providerId: mcgill
+regime: education
+generated: '2026-08-30'
+modified: '2026-08-30'
+method: probed
+source: >-
+  Direct live probes of shibboleth.mcgill.ca and mcgill.scholaris.ca on 2026-08-30. Every
+  conformance below is asserted from a fetched response body, never from a prose claim on a
+  web page.
+description: >-
+  Domain-standard conformance for McGill University against the Kin Score `education`
+  regulatory regime. Three of the regime's named standards are evidenced by live response
+  bodies. Each entry records the operator of the surface that satisfies it, because two of
+  the three are satisfied by a platform McGill is a tenant on rather than by McGill's own
+  engineering, and crediting those to the institution without saying so is the failure mode
+  this profile exists to avoid.
+conformance:
+- standard: saml
+  status: conformant
+  operator: institution
+  surface: McGill University Authentication Service (Shibboleth IdP)
+  version: SAML 2.0
+  evidence:
+    url: https://shibboleth.mcgill.ca/idp/shibboleth
+    status: 200
+    content_type: application/xml;charset=utf-8
+    observed: '2026-08-30'
+    locator: >-
+      Root element EntityDescriptor in namespace urn:oasis:names:tc:SAML:2.0:metadata,
+      entityID="https://shibboleth.mcgill.ca/idp/shibboleth"; IDPSSODescriptor declares
+      protocolSupportEnumeration including urn:oasis:names:tc:SAML:2.0:protocol.
+    detail: >-
+      SingleSignOnService bindings published: HTTP-POST, HTTP-POST-SimpleSign, HTTP-Redirect.
+      SingleLogoutService bindings published: HTTP-POST, HTTP-Redirect. Signing X.509
+      KeyDescriptor present.
+- standard: shibboleth
+  status: conformant
+  operator: institution
+  surface: McGill University Authentication Service (Shibboleth IdP)
+  evidence:
+    url: https://shibboleth.mcgill.ca/idp/shibboleth
+    status: 200
+    observed: '2026-08-30'
+    locator: >-
+      Namespace xmlns:shibmd="urn:mace:shibboleth:metadata:1.0" with
+      <shibmd:Scope regexp="false">mcgill.ca</shibmd:Scope>; legacy Shibboleth 1.x profile
+      declared via protocolSupportEnumeration="urn:mace:shibboleth:1.0" and
+      Binding="urn:mace:shibboleth:1.0:profiles:AuthnRequest" at
+      https://shibboleth.mcgill.ca/idp/profile/Shibboleth/SSO.
+    detail: >-
+      mdui:UIInfo publishes bilingual DisplayName ("McGill University" / "Universite McGill"),
+      the federation-facing signal that this IdP is institutionally operated.
+- standard: oai-pmh
+  status: conformant
+  operator: tenant
+  surface: eScholarship@McGill (Scholaris / DSpace)
+  version: '2.0'
+  evidence:
+    url: https://mcgill.scholaris.ca/server/oai/request?verb=Identify
+    status: 200
+    content_type: text/xml;charset=UTF-8
+    observed: '2026-08-30'
+    locator: >-
+      OAI-PMH Identify response — repositoryName "eScholarship@McGill",
+      baseURL https://mcgill.scholaris.ca/server/oai/request, protocolVersion 2.0,
+      adminEmail escholarship.library@mcgill.ca, repositoryIdentifier mcgill.scholaris.ca.
+    detail: >-
+      ListMetadataFormats returns 13 prefixes: oai_dc, qdc, mods, mets, didl, ore, xoai, dim,
+      rdf, marc, etdms, rioxx, uketd_dc. The repository is McGill's and the admin contact is a
+      mcgill.ca address, but the software and hosting are Scholaris (Scholars Portal / OCUL) —
+      mcgill.scholaris.ca resolves via public-proxy.scholaris.ca, so the conformance is the
+      platform's and the content is McGill's.
+  note: >-
+    Corrects the 2026-06-03 review, which recorded the eScholarship OAI-PMH endpoint as
+    returning an SPA landing page. That probe used the DSpace 6 path (/oai/request); this
+    deployment is DSpace 7 and serves valid OAI-PMH at /server/oai/request. The endpoint was
+    never dead — the path was wrong.
+not_evidenced:
+- standard: scim
+  reason: No SCIM endpoint discovered on any McGill-operated host.
+- standard: lti
+  reason: >-
+    McGill runs myCourses (D2L Brightspace), which is LTI-capable, but no LTI registration or
+    platform configuration document is published at a public URL.
+- standard: oneroster
+  reason: Not discovered.
+- standard: ed-fi
+  reason: Not discovered; Ed-Fi is a US K-12 standard with no Canadian higher-education use here.
+- standard: caliper
+  reason: Not discovered.
+- standard: qti
+  reason: Not discovered.
+- standard: orcid
+  reason: >-
+    Not asserted. ORCID integration is plausible in the Scholaris and Borealis platforms but
+    no ORCID-specific machine-readable surface was returned by probe, and a platform
+    capability is not McGill conformance.
+- standard: datacite
+  reason: >-
+    Not asserted. Borealis mints DOIs for McGill Dataverse deposits, but no DataCite API or
+    metadata endpoint under a McGill-operated host was probed, and the minting is Scholars
+    Portal's, not McGill's.
+- standard: crossref
+  reason: Not discovered.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

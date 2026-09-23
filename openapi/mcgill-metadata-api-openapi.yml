@@ -1,0 +1,35 @@
+openapi: 3.2.0
+info:
+  title: McGill University Authentication Service — Shibboleth SAML…
+  description: The SAML 2.0 identity provider operated by McGill University at shibboleth.mcgill.ca.
+  version: '2026-08-30'
+  contact:
+    name: McGill IT Services
+    url: https://www.mcgill.ca/it/
+  x-operator: institution
+  x-operator-evidence: Host shibboleth.mcgill.ca is under McGill's own registrable domain and resolves to 132.216.98.81 (McGill address space, no vendor CNAME). SAML EntityDescriptor entityID is https://shibboleth.mcgill.ca/idp/shibboleth and shibmd:Scope is mcgill.ca.
+  x-method: probed
+  x-source: https://shibboleth.mcgill.ca/idp/shibboleth
+servers:
+- url: https://shibboleth.mcgill.ca
+  description: McGill University Authentication Service (Shibboleth IdP)
+tags:
+- name: Metadata
+  description: SAML 2.0 entity metadata published for relying parties and federations.
+paths:
+  /idp/shibboleth:
+    get:
+      operationId: getIdpSamlMetadata
+      summary: Retrieve the McGill SAML 2.0 identity provider metadata
+      description: 'Returns the SAML 2.0 EntityDescriptor for McGill University''s identity provider: signing and encryption X.509 key descriptors, the shibmd:Scope (`mcgill.ca`), the mdui:UIInfo display names in English and French, and every SingleSignOnService and SingleLogoutService binding the IdP supports. Unauthenticated; observed 200 with content-type application/xml;charset=utf-8 and an 8,995-byte body on 2026-08-30.'
+      tags:
+      - Metadata
+      responses:
+        '200':
+          description: SAML 2.0 EntityDescriptor for entityID https://shibboleth.mcgill.ca/idp/shibboleth
+          content:
+            application/xml:
+              schema:
+                type: string
+                format: xml
+                description: SAML 2.0 metadata document (urn:oasis:names:tc:SAML:2.0:metadata EntityDescriptor containing a single IDPSSODescriptor).

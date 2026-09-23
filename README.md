@@ -64,7 +64,7 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-McGill University is a public research university in Montreal, Quebec, Canada, ranked #64 in the QS World University Rankings 2025. This repository catalogs McGill's public, machine-readable developer and API footprint as an [APIs.json](https://apisjson.org) profile. McGill's strongest verifiable public API surface is its research-data infrastructure (the McGill University Dataverse on the Borealis platform) plus a Shibboleth SAML single sign-on identity service; most other systems are gated behind authentication or web UIs.
+McGill University is a public research university in Montreal, Quebec, Canada, and a member of the U15 group of Canadian research universities. This repository catalogs McGill's public, machine-readable footprint as an [APIs.json](https://apisjson.org) profile, and the operator of every surface is settled before it is catalogued. McGill operates exactly one machine-readable surface itself — the Shibboleth SAML 2.0 identity provider at `shibboleth.mcgill.ca`, whose federation metadata is served unauthenticated. Its research repository, research-data collection and course catalogue are real institutional facts but run as tenants on platforms McGill does not engineer (Scholaris, Borealis, CourseLeaf), and their contracts are recorded against those platforms, not against McGill.
 
 - APIs.json: https://raw.githubusercontent.com/api-evangelist/mcgill/refs/heads/main/apis.yml
 - Run with Naftiko: https://github.com/naftiko/fleet?utm_source=api-evangelist&utm_medium=readme&utm_campaign=mcgill-api-evangelist&utm_content=repo
@@ -77,13 +77,22 @@ McGill University is a public research university in Montreal, Quebec, Canada, r
 
 ## Tags
 
-Education, Higher Education, University, Research Data, Open Data, Canada, Quebec
+University, Higher Education, Education, Canada, Quebec, U15, Public Research University, Identity Federation, Research Repository, Research Data, Course Catalog
 
 ## APIs
 
-- **McGill University Dataverse (Borealis) - Native API** — Dataverse Native REST API over the McGill collection. Docs: https://borealisdata.ca/guides/en/latest/api/native-api.html (base: `https://borealisdata.ca/api`)
-- **McGill University Dataverse (Borealis) - Search API** — Dataverse Search REST API. Docs: https://guides.dataverse.org/en/latest/api/search.html (base: `https://borealisdata.ca/api/search`)
-- **McGill Shibboleth SAML Single Sign-On** — McGill Authentication Service, a SAML 2.0 Shibboleth IdP (identity/SSO, not an open data API). https://shibboleth.mcgill.ca/
+- **McGill University Authentication Service — Shibboleth SAML 2.0 Identity Provider** (`x-operator: institution`) — the one surface McGill itself operates. Federation metadata served unauthenticated at https://shibboleth.mcgill.ca/idp/shibboleth (HTTP 200, `application/xml`). Contract: [openapi/mcgill-shibboleth-idp-openapi.yml](openapi/mcgill-shibboleth-idp-openapi.yml)
+- **eScholarship@McGill on Scholaris** (`x-operator: tenant`) — McGill's institutional repository on the Scholaris (Scholars Portal / OCUL) DSpace 7 platform. DSpace REST at https://mcgill.scholaris.ca/server/api and conformant OAI-PMH 2.0 at `/server/oai/request`. No contract saved: the interfaces are DSpace's.
+- **McGill University Dataverse on Borealis** (`x-operator: tenant`) — McGill's research-data collection at https://borealisdata.ca/dataverse/mcgill. `borealisdata.ca` is a consortial host shared by six institutions in this catalog, so the Dataverse Native and Search contracts are not saved here.
+- **McGill Course Catalogue on CourseLeaf** (`x-operator: tenant`) — https://coursecatalogue.mcgill.ca/, CNAMEd to `mcgill-ca-public.courseleaf.com`. Carries a live undocumented course-detail endpoint (`/ribbit/index.cgi?page=getcourse.rjs&code=COMP+202` → XML). No contract saved: the endpoint is CourseLeaf's product surface.
+
+## Conformance
+
+- [conformance/mcgill-conformance.yml](conformance/mcgill-conformance.yml) — `saml` and `shibboleth` evidenced institution-operated; `oai-pmh` evidenced tenant-operated.
+
+## Authentication
+
+- [authentication/mcgill-authentication.yml](authentication/mcgill-authentication.yml)
 
 ## Plans
 
@@ -100,25 +109,49 @@ Education, Higher Education, University, Research Data, Open Data, Canada, Quebe
 ## Timestamps
 
 - Created: 2026-06-03
-- Modified: 2026-06-03
+- Modified: 2026-08-30
 
 ## Common Properties
 
 - Website: https://www.mcgill.ca/
-- Twitter: https://twitter.com/mcgillu
+- Twitter: https://x.com/mcgillu
 - LinkedIn: https://www.linkedin.com/school/mcgill-university/
-- Authentication: https://shibboleth.mcgill.ca/
+- IdentityFederation: https://shibboleth.mcgill.ca/idp/shibboleth
+- ResearchRepository: https://mcgill.scholaris.ca/
+- OpenData: https://borealisdata.ca/dataverse/mcgill
+- CourseCatalog: https://coursecatalogue.mcgill.ca/
+- PrivacyPolicy: https://www.mcgill.ca/privacy-notice
 
 ## Notes
 
-Verification caveats (probed 2026-06-03):
+Re-profiled 2026-08-30 under the API Evangelist university pipeline, which settles who operates a
+surface before any contract is saved. What changed and why:
 
-- The Borealis Dataverse Native and Search APIs were confirmed live — `GET /api/dataverses/mcgill` returned a McGill collection JSON record and `/api/search` returned HTTP 200.
-- An Azure API Management developer-portal hostname (`mcgilluniversity.portal.azure-api.net`) appeared in search but did not resolve (connection refused), so it is not cataloged.
-- A `github.com/mcgill` org exists but has zero public repositories and could not be verified as officially McGill-owned; `github.com/mcgillu` returned 404. No GitHub pointer is asserted in `apis.yml`.
-- An eScholarship OAI-PMH path returned a single-page-app HTML landing page rather than valid OAI-PMH XML; no working public OAI-PMH endpoint was confirmed.
-- Course catalogue and Minerva/Banner registration are web UIs without documented public APIs.
-- No endpoints were fabricated; only live-verified surfaces are included.
+- **Five OpenAPI documents describing the Dataverse Native and Search APIs on `borealisdata.ca`
+  were removed, along with twenty-one artifacts derived from them** (JSON Schema, JSON Structure,
+  examples, OpenCollection and Postman collections, Spectral rules, vocabulary, JSON-LD context,
+  agentic-access, authentication). `borealisdata.ca` is a consortial host operated by Scholars
+  Portal / OCUL and claimed by six institutions in this catalog; the contract is Dataverse's, not
+  McGill's, and everything derived from it inherited that provenance. McGill's Dataverse
+  *collection* is kept as a tenant relationship.
+- **The Shibboleth identity provider was upgraded from a bare link to a catalogued contract.**
+  Its SAML metadata (HTTP 200, `application/xml`, 8,995 bytes, entityID and `shibmd:Scope` both
+  `mcgill.ca`, host resolving to 132.216.98.81 with no vendor CNAME) is the only machine-readable
+  surface McGill itself operates.
+- **The 2026-06-03 finding that eScholarship's OAI-PMH returned an SPA landing page was wrong.**
+  That probe used the DSpace 6 path (`/oai/request`); the deployment is DSpace 7 and serves valid
+  OAI-PMH 2.0 at https://mcgill.scholaris.ca/server/oai/request, with thirteen metadata prefixes.
+  The endpoint was never dead — the path was.
+- `coursecatalogue.mcgill.ca` sits on McGill's own domain but CNAMEs to
+  `mcgill-ca-public.courseleaf.com`, so it is recorded as a tenant rather than as institution
+  engineering, even though a host-only rule would read it as McGill's.
+- Still absent, probed and confirmed: `api.mcgill.ca`, `data.mcgill.ca` and `opendata.mcgill.ca`
+  do not resolve; `/llms.txt` and `/.well-known/security.txt` return 404; `github.com/mcgill` is
+  an org with zero public repositories and no verifiable McGill ownership, so no GitHub pointer is
+  asserted. `shibboleth.mcgill.ca/idp/status` returns 403 from the public internet.
+- Minerva/Banner registration, WorldCat library discovery and Workday HR are behind authentication
+  with no public interface.
+- No endpoints were fabricated; every status code above was observed by direct probe.
 
 ## Maintainers
 

@@ -1,0 +1,39 @@
+openapi: 3.2.0
+info:
+  title: McGill University Authentication Service — Shibboleth SAML…
+  description: The SAML 2.0 identity provider operated by McGill University at shibboleth.mcgill.ca.
+  version: '2026-08-30'
+  contact:
+    name: McGill IT Services
+    url: https://www.mcgill.ca/it/
+  x-operator: institution
+  x-operator-evidence: Host shibboleth.mcgill.ca is under McGill's own registrable domain and resolves to 132.216.98.81 (McGill address space, no vendor CNAME). SAML EntityDescriptor entityID is https://shibboleth.mcgill.ca/idp/shibboleth and shibmd:Scope is mcgill.ca.
+  x-method: probed
+  x-source: https://shibboleth.mcgill.ca/idp/shibboleth
+servers:
+- url: https://shibboleth.mcgill.ca
+  description: McGill University Authentication Service (Shibboleth IdP)
+tags:
+- name: Status
+  description: Identity provider operational status.
+paths:
+  /idp/status:
+    get:
+      operationId: getIdpStatus
+      summary: Identity provider status report
+      description: Shibboleth's operational status report. Access-restricted by network policy — observed 403 from the public internet on 2026-08-30. Documented because it is a real, declared surface of this deployment and its restriction is the finding.
+      tags:
+      - Status
+      responses:
+        '200':
+          description: Plain-text status report (restricted networks only).
+          content:
+            text/plain:
+              schema:
+                type: string
+        '403':
+          description: Access denied from outside permitted networks (observed).
+          content:
+            text/html:
+              schema:
+                type: string

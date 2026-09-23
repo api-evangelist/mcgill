@@ -1,0 +1,26 @@
+{
+  "provider": "mcgill",
+  "sources": [
+    "_original/mcgill-shibboleth-idp-metadata.yaml"
+  ],
+  "outputs": [
+    "mcgill-metadata-api-openapi.yml",
+    "mcgill-sso-api-openapi.yml",
+    "mcgill-status-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "1 archived document(s) dropped as subsets of other archived documents",
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "mcgill-shibboleth-idp-metadata.yaml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "_original/mcgill-shibboleth-idp-openapi.yml: archived document superseded by a larger archived document",
+    "mcgill-metadata-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "mcgill-sso-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "mcgill-status-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
+}
