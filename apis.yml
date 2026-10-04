@@ -265,6 +265,9 @@ apis:
   - type: Website
     url: https://shibboleth.mcgill.ca/
 common:
+  - type: CapabilityMap
+    url: capabilities/mcgill-capability-edges.yml
+    name: McGill University Business Capability Map
   - type: Website
     url: https://www.mcgill.ca/
   - type: IdentityFederation
