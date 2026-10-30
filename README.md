@@ -1,4 +1,4 @@
-# McGill University (mcgill)
+# McGill University
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,95 +64,123 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-McGill University is a public research university in Montreal, Quebec, Canada, and a member of the U15 group of Canadian research universities. This repository catalogs McGill's public, machine-readable footprint as an [APIs.json](https://apisjson.org) profile, and the operator of every surface is settled before it is catalogued. McGill operates exactly one machine-readable surface itself — the Shibboleth SAML 2.0 identity provider at `shibboleth.mcgill.ca`, whose federation metadata is served unauthenticated. Its research repository, research-data collection and course catalogue are real institutional facts but run as tenants on platforms McGill does not engineer (Scholaris, Borealis, CourseLeaf), and their contracts are recorded against those platforms, not against McGill.
+McGill University is a public research university in Montreal, Quebec, Canada, and one of Canada's two U15 institutions in the global top 100. Its programmable footprint is small and must be described honestly: McGill operates no developer portal, publishes no API key programme, and runs no OAuth authorization server. Exactly one machine-readable surface is operated by the institution itself — the Shibboleth SAML 2.0 identity provider at shibboleth.mcgill.ca, whose federation metadata is served unauthenticated at /idp/shibboleth and carries entityID and shibmd:Scope of mcgill.ca. Everything else that looks like a McGill API is a platform McGill is a tenant on: eScholarship@McGill runs on Scholaris (Scholars Portal / OCUL DSpace 7) at mcgill.scholaris.ca, which serves a DSpace REST root and a valid OAI-PMH 2.0 endpoint; the McGill University Dataverse is a collection on Borealis (borealisdata.ca), a consortial host shared with five other institutions in this catalog; the course catalogue at coursecatalogue.mcgill.ca is a CourseLeaf instance CNAMEd to mcgill-ca-public.courseleaf.com. Those relationships are real institutional facts and are recorded as tenant surfaces — the data is McGill's, the contracts are not. Registration, library discovery and HR run on Banner/Minerva, WorldCat and Workday behind authentication with no public interface.
 
-- APIs.json: https://raw.githubusercontent.com/api-evangelist/mcgill/refs/heads/main/apis.yml
-- Run with Naftiko: https://github.com/naftiko/fleet?utm_source=api-evangelist&utm_medium=readme&utm_campaign=mcgill-api-evangelist&utm_content=repo
+**Areas:** University · Higher Education · Education · Canada · Quebec · U15 · Public Research University · Identity Federation · Research Repository · Research Data · Course Catalog
 
-## Type
+## McGill University on APIs.io
 
-- Index
-- Consumer
-- 3rd-Party
+Everything profiled for McGill University is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/mcgill/](https://apis.io/providers/mcgill/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (6)
 
-University, Higher Education, Education, Canada, Quebec, U15, Public Research University, Identity Federation, Research Repository, Research Data, Course Catalog
+- [eScholarship@McGill on Scholaris (tenant)](https://apis.io/apis/mcgill/escholarship-scholaris/) — McGill's institutional research repository, running as a tenant on Scholaris. It exposes a DSpace REST (HAL) root at /server/api and a conformant OAI-PMH…
+- [McGill University Dataverse on Borealis (tenant)](https://apis.io/apis/mcgill/dataverse-borealis/) — McGill's research-data collection on Borealis, the Canadian consortial Dataverse repository. The collection, its datasets and its DOIs are McGill's. The…
+- [McGill Course Catalogue on CourseLeaf (tenant)](https://apis.io/apis/mcgill/coursecatalogue-courseleaf/) — McGill's official course catalogue, published on CourseLeaf. It carries an undocumented but live machine-readable course-detail endpoint — GET…
+- [McGill University Metadata API](https://apis.io/apis/mcgill/mcgill-metadata-api/) — SAML 2.0 entity metadata published for relying parties and federations.
+- [McGill University SSO API](https://apis.io/apis/mcgill/mcgill-sso-api/) — SAML 2.0 single sign-on and single logout profile endpoints.
+- [McGill University Status API](https://apis.io/apis/mcgill/mcgill-status-api/) — Identity provider operational status.
 
-## APIs
+### Published properties
 
-- **McGill University Authentication Service — Shibboleth SAML 2.0 Identity Provider** (`x-operator: institution`) — the one surface McGill itself operates. Federation metadata served unauthenticated at https://shibboleth.mcgill.ca/idp/shibboleth (HTTP 200, `application/xml`). Contract: [openapi/mcgill-shibboleth-idp-openapi.yml](openapi/mcgill-shibboleth-idp-openapi.yml)
-- **eScholarship@McGill on Scholaris** (`x-operator: tenant`) — McGill's institutional repository on the Scholaris (Scholars Portal / OCUL) DSpace 7 platform. DSpace REST at https://mcgill.scholaris.ca/server/api and conformant OAI-PMH 2.0 at `/server/oai/request`. No contract saved: the interfaces are DSpace's.
-- **McGill University Dataverse on Borealis** (`x-operator: tenant`) — McGill's research-data collection at https://borealisdata.ca/dataverse/mcgill. `borealisdata.ca` is a consortial host shared by six institutions in this catalog, so the Dataverse Native and Search contracts are not saved here.
-- **McGill Course Catalogue on CourseLeaf** (`x-operator: tenant`) — https://coursecatalogue.mcgill.ca/, CNAMEd to `mcgill-ca-public.courseleaf.com`. Carries a live undocumented course-detail endpoint (`/ribbit/index.cgi?page=getcourse.rjs&code=COMP+202` → XML). No contract saved: the endpoint is CourseLeaf's product surface.
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## Conformance
+#### Vocabulary (1)
 
-- [conformance/mcgill-conformance.yml](conformance/mcgill-conformance.yml) — `saml` and `shibboleth` evidenced institution-operated; `oai-pmh` evidenced tenant-operated.
+The provider's domain terms, defined.
 
-## Authentication
+- [McGill University Dataverse (Borealis) Vocabulary](https://apis.io/vocabularies/mcgill/mcgill-vocabulary/)
 
-- [authentication/mcgill-authentication.yml](authentication/mcgill-authentication.yml)
+#### Governance rules (1)
 
-## Plans
+Spectral rulesets for the provider's contracts.
 
-- [plans/mcgill-plans-pricing.yml](plans/mcgill-plans-pricing.yml)
+- [McGill University API Rules](https://apis.io/rules/mcgill/mcgill-rules/)
 
-## Rate Limits
+#### Security (2)
 
-- [rate-limits/mcgill-rate-limits.yml](rate-limits/mcgill-rate-limits.yml)
+Authentication, trust centre, and vulnerability disclosure.
 
-## FinOps
+- [Mcgill Authentication](https://apis.io/security/mcgill/mcgill-authentication/)
+- [Mcgill Domain Security](https://apis.io/security/mcgill/mcgill-domain-security/)
 
-- [finops/mcgill-finops.yml](finops/mcgill-finops.yml)
+#### Plans and pricing (1)
 
-## Timestamps
+Published plans, tiers and prices.
 
-- Created: 2026-06-03
-- Modified: 2026-08-30
+- [Mcgill Plans Pricing](https://apis.io/plans/mcgill/mcgill-plans-pricing/)
 
-## Common Properties
+#### Rate limits (1)
 
-- Website: https://www.mcgill.ca/
-- Twitter: https://x.com/mcgillu
-- LinkedIn: https://www.linkedin.com/school/mcgill-university/
-- IdentityFederation: https://shibboleth.mcgill.ca/idp/shibboleth
-- ResearchRepository: https://mcgill.scholaris.ca/
-- OpenData: https://borealisdata.ca/dataverse/mcgill
-- CourseCatalog: https://coursecatalogue.mcgill.ca/
-- PrivacyPolicy: https://www.mcgill.ca/privacy-notice
+Published request limits.
 
-## Notes
+- [Mcgill Rate Limits](https://apis.io/rate-limits/mcgill/mcgill-rate-limits/)
 
-Re-profiled 2026-08-30 under the API Evangelist university pipeline, which settles who operates a
-surface before any contract is saved. What changed and why:
+#### FinOps (1)
 
-- **Five OpenAPI documents describing the Dataverse Native and Search APIs on `borealisdata.ca`
-  were removed, along with twenty-one artifacts derived from them** (JSON Schema, JSON Structure,
-  examples, OpenCollection and Postman collections, Spectral rules, vocabulary, JSON-LD context,
-  agentic-access, authentication). `borealisdata.ca` is a consortial host operated by Scholars
-  Portal / OCUL and claimed by six institutions in this catalog; the contract is Dataverse's, not
-  McGill's, and everything derived from it inherited that provenance. McGill's Dataverse
-  *collection* is kept as a tenant relationship.
-- **The Shibboleth identity provider was upgraded from a bare link to a catalogued contract.**
-  Its SAML metadata (HTTP 200, `application/xml`, 8,995 bytes, entityID and `shibmd:Scope` both
-  `mcgill.ca`, host resolving to 132.216.98.81 with no vendor CNAME) is the only machine-readable
-  surface McGill itself operates.
-- **The 2026-06-03 finding that eScholarship's OAI-PMH returned an SPA landing page was wrong.**
-  That probe used the DSpace 6 path (`/oai/request`); the deployment is DSpace 7 and serves valid
-  OAI-PMH 2.0 at https://mcgill.scholaris.ca/server/oai/request, with thirteen metadata prefixes.
-  The endpoint was never dead — the path was.
-- `coursecatalogue.mcgill.ca` sits on McGill's own domain but CNAMEs to
-  `mcgill-ca-public.courseleaf.com`, so it is recorded as a tenant rather than as institution
-  engineering, even though a host-only rule would read it as McGill's.
-- Still absent, probed and confirmed: `api.mcgill.ca`, `data.mcgill.ca` and `opendata.mcgill.ca`
-  do not resolve; `/llms.txt` and `/.well-known/security.txt` return 404; `github.com/mcgill` is
-  an org with zero public repositories and no verifiable McGill ownership, so no GitHub pointer is
-  asserted. `shibboleth.mcgill.ca/idp/status` returns 403 from the public internet.
-- Minerva/Banner registration, WorldCat library discovery and Workday HR are behind authentication
-  with no public interface.
-- No endpoints were fabricated; every status code above was observed by direct probe.
+What the API costs to run, by operation.
 
-## Maintainers
+- [Mcgill Finops](https://apis.io/finops/mcgill/mcgill-finops/)
 
-- Kin Lane — kin@apievangelist.com
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.mcgill.ca/)
+- [Support](https://www.mcgill.ca/it/support)
+- [Blog](https://www.mcgill.ca/newsroom/)
+- [Terms of service](https://www.mcgill.ca/secretariat/repository-university-policies-and-regulations)
+- [Privacy policy](https://www.mcgill.ca/privacy-notice)
+
+## API Evangelist rating
+
+**Kin Score 31.4** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 43.5 |
+| Contract governance | 11.4 |
+| Operational transparency | 5.3 |
+| Developer ergonomics | 35.7 |
+| Access clarity | 26.3 |
+
+**Agent readiness 16.1** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 19.6** — Education & Research
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/mcgill/](https://apis.io/providers/mcgill/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for McGill University: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/mcgill/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
